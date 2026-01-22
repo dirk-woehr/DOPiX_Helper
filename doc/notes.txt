@@ -1,0 +1,15 @@
+Kann: Optional, nicht vorausgewählt
+Soll: Optional, aber vorausgewählt
+Muss: Keine bwahloption
+
+Regelauswertung lesen
+
+Update vars für aktualisierung von bestehenden Variablen
+
+Verschiedene Mapping-Bausteine für unterschiedliche positionen im Brief
+
+Bei dunkelbriefen kein Muss verwenden
+
+Bezeichner nur Großbuchstaben & Zahlen, keine spaces
+
+
