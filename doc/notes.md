@@ -81,8 +81,11 @@ Bezug in Logik herstellen und in Variable zuweisen
 
 # Brief anlegen
 
-* Neuer Prozess => Anlegen
+* Neuer Prozess => Änderung => [Prozess Anlegen]
+* Prozessname eingeben & kopieren => [Weiter]
+* Kopierten Namen in Betreff & Beschreibung einsetzen => [Weiter]
 * Typ/Arbeitskorb (Gruppen) auswählen
+* Wenn ausgewählt, erscheint oben "Administration", dort Bearbeiten -> "DOPiX-Admin öffnen" auswählen
 * Bezeichner aus Name auslesen (oder unter "Auftraggeber in Spezifikation)
 * Link zu Confluence in Jira
 * Name bekannt aus Projekt (keine Regel, muss man wissen)
@@ -96,4 +99,21 @@ Bezug in Logik herstellen und in Variable zuweisen
 * Verweise aktualisieren (TTR -> TTD, TTD- > RUF, RUF -> DVL, DVL -> TXK)
 * Vor ausführen Liste in DVL aktualisieren
 * Bausteine per Default: Baustein nicht änderbar, Gruppe änderbar
+* Bei neuem Baustein:
+  Status auf Projektbezogen
+  Projektname (K_AV_ZZ)Funktioniert
+* Vorauswahl: Muss wenn ohne Logik, Kann bei Logik
+* Baustein kopieren
+  Dann in Kopfdaten:
+    Name aus Spezifikation
+    Beschreibung aus Spezifikation
+
 * Brief ausführen über "abbrechen" beenden, über (X) wird DOPiX beendet
+
+* Am Ende nach Vorschau unten auf Weiter und prüfen, ob es Fehler gibt.
+
+* Variablen in Parameter anlegen
+* Logikbaustein anklicken
+* In Logiktab
+-> Bedingungen Benutzerdefiniert, nicht oben
+-> Wert aus Spezi kopieren
