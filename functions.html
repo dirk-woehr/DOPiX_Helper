@@ -1,37 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🏠 DOPiX Helper Tools</title>
+  <title>⨍ DOPiX Functions</title>
+  <script src="/js/functions_data.js"></script>
+  <script src="/js/functions.js"></script>
   <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/functions.css">
   <!-- font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
     rel="stylesheet">
 </head>
+
 <body>
-  <h1>🏠 DOPiX Helper Tools</h1>
+  <h1>⨍ DOPiX Functions</h1>
   <ul id="nav">
     <li>
-      <a href="/renamer.html">⇆ Renamer</a>
-    </li>
-<!--     <li>
-      <a href="/xml_builder.html">🗈 XML Builder</a>
-    </li> -->
-    <li>
-      <a href="/functions.html">⨍ DOPiX Functions</a>
-    </li>
-    <li>
-      <a href="/parameter_check.html">⚙ Parameter Check</a>
-    </li>
-    <li>
-      <a href="/parameter_check_xml.html">⚙ Parameter Check XML</a>
-    </li>
-    <li>
-      <a href="/xpath_builder.html">🔗 Xpath Builder</a>
+      <a href="/index.html">🏠 Home</a>
     </li>
   </ul>
+  <div id="functionSelection">
+    <select name="selector" id="selector"></select>
+    <button id="btnAdd">Hinzufügen</button>
+  </div>
+  <table>
+    <tbody id="functionsTable"></tbody>
+  </table>
 </body>
+
 </html>

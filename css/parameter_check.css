@@ -1,0 +1,29 @@
+.mainContainer {
+  display: flex;
+  width: 100%;
+}
+
+.areaContainer {
+  width: 100%;
+}
+
+textarea {
+  width: 95%;
+  height: 350px;
+}
+
+p.exists {
+  color: green;  
+}
+
+p.exists::after {
+  content: " ✅";
+}
+
+p.missing::after {
+  content: " ❌";
+}
+
+p.missing {
+  color: red;
+}

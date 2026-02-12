@@ -1,0 +1,18 @@
+#xpathExpressionOutput {
+  color: darkolivegreen;
+  padding: 12px 36px;
+  font-size: 16px;
+}
+
+#xpathValue {
+  background-color: darkgreen;
+  color: aliceblue;
+  font-size: 24px;
+  padding: 12px 36px;
+  display: inline-block;
+  border-radius: 6px;
+}
+
+#xpathValue:empty {
+  display: none;
+}

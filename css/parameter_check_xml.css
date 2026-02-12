@@ -1,0 +1,63 @@
+#table {
+  width: 100%;
+  border-spacing: 0;
+}
+
+#thead {
+  width: 100%;
+}
+
+tr.even {
+  background-color: #fdefde;
+  td:not(:last-child) {
+    border-right: 1px solid white;
+  }
+  th:not(:last-child) {
+    border-right: 1px solid white;
+  }
+}
+td {
+  padding: 6px;
+  vertical-align: top;
+  &:not(:last-child) {
+    border-right: 1px solid #fdefde;
+  }
+}
+
+.emptyLogik {
+  padding: 10px;
+}
+
+.columnHead {
+  width: 24.9vh;
+  padding: 10px;
+  background-color: #fdefde;
+  color: black;
+  text-align: left;
+}
+.columnHeadMain {
+  padding: 10px;
+  background-color: #F4D06F;
+  color: black;
+}
+
+span.correct::before {
+  content: " ✅";
+  margin-right: 10px;
+}
+
+span.incorrect::before {
+  content: " ❌";
+  margin-right: 10px;
+}
+
+.divLog {
+  height: auto;
+  transition: height 0.616s ease;
+  overflow-y: hidden;
+  interpolate-size: allow-keywords;
+}
+
+.divLog.hide {
+  height: 0px;
+}

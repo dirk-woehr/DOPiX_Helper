@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/main.css">
-  <title>⇆ DOPiX Renamer</title>
-  <script src="/js/renamer.js"></script>
-  <link rel="stylesheet" href="/css/renamer.css">
+  <link rel="stylesheet" href="/css/xpath_builder.css">
+  <script src="/js/xpath_builder.js"></script>
+  <title>🔗 DOPiX Xpath Builder</title>
   <!-- font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,16 +14,18 @@
     rel="stylesheet">
 </head>
 <body>
-  <h1>⇆ DOPiX Renamer</h1>
+  <h1>🔗 DOPiX Xpath Builder</h1>
   <ul id="nav">
     <li>
       <a href="/index.html">🏠 Home</a>
     </li>
   </ul>
-  <input type="text" name="baseName" id="baseName" placeholder="Basisname (TTR)">
-
-  <div id="reanimgGrid">
+  <div class="formContainer">
+    <input type="text" name="variablePath" id="variablePath" placeholder="Pfad zur Variable">
+    <input type="text" name="xmlFileName" id="xmlFileName" placeholder="Pfad zum XML">
+    <button id="btnBuild">Xpath erstellen</button>
   </div>
-
+  <pre id="xpathExpressionOutput"></pre>
+  <div id="xpathValue"></div>
 </body>
 </html>
