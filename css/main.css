@@ -79,6 +79,7 @@ ul#nav {
       font-size: 18px;
       font-weight: 800;
       color: var(--nav-item-text-color);
+      text-shadow: 1px 1px 2px black;
       padding: 12px 36px;
       text-decoration: none;
       border-radius: 6px;
@@ -96,6 +97,7 @@ button {
   font-size: 18px;
   font-weight: 800;
   color: white;
+  text-shadow: 1px 1px 2px black;
   padding: 12px 36px;
   text-decoration: none;
   border-radius: 6px;
