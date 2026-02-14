@@ -1,5 +1,5 @@
 #xpathExpressionOutput {
-  color: darkolivegreen;
+  color: rgb(74, 192, 153);
   padding: 12px 36px;
   font-size: 16px;
 }
@@ -15,4 +15,8 @@
 
 #xpathValue:empty {
   display: none;
+}
+
+#xpathExpressionOutput.error {
+  color: darkred;
 }

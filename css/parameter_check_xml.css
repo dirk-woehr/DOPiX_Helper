@@ -1,6 +1,7 @@
 #table {
   width: 100%;
   border-spacing: 0;
+  margin: 0 var(--padding-vert);
 }
 
 #thead {
@@ -8,19 +9,19 @@
 }
 
 tr.even {
-  background-color: #fdefde;
+  background-color: var(--table-even-row-color);
   td:not(:last-child) {
-    border-right: 1px solid white;
+    border-right: 1px solid var(--table-head-color);;
   }
   th:not(:last-child) {
-    border-right: 1px solid white;
+    border-right: 1px solid var(--table-head-color);;
   }
 }
 td {
   padding: 6px;
   vertical-align: top;
   &:not(:last-child) {
-    border-right: 1px solid #fdefde;
+    border-right: 1px solid var(--table-head-color);
   }
 }
 
@@ -31,23 +32,27 @@ td {
 .columnHead {
   width: 24.9vh;
   padding: 10px;
-  background-color: #fdefde;
-  color: black;
+  background-color: var(--table-subhead-color);
+  color: var(--table-head-text-color);
   text-align: left;
+  &:not(:last-child) {
+    border-right: 1px solid var(--table-head-color);
+  }
 }
 .columnHeadMain {
   padding: 10px;
-  background-color: #F4D06F;
-  color: black;
+  background-color: var(--table-head-color);
+  color: var(--table-head-text-color);
+  text-shadow: 1px 1px 2px black;
 }
 
 span.correct::before {
-  content: " ✅";
+  content: var( --green-check);
   margin-right: 10px;
 }
 
 span.incorrect::before {
-  content: " ❌";
+  content: var(--red-error);
   margin-right: 10px;
 }
 

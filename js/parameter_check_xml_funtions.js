@@ -61,7 +61,7 @@ const extractParametersFromLogicElement = (
           const logicString = logicSubTypeElement.getAttribute("value");
           if(logicString && logicString.length > 0) {
             collectParametersFromLogic(
-              executionContext + " | " + logicTypeString + " | " + logicSubTypeString + " | " + index,
+              executionContext + " | " + logicTypeString + " | " + logicSubTypeString + " | " + index + " | ",
               logicString,
               parameters
             );

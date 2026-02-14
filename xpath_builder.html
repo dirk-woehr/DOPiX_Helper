@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/xpath_builder.css">
+  <script src="/js/global_functions.js"></script>
   <script src="/js/xpath_builder.js"></script>
   <title>🔗 DOPiX Xpath Builder</title>
   <!-- font -->
@@ -21,11 +22,13 @@
     </li>
   </ul>
   <div class="formContainer">
+    <input type="file" id="fileInput" />
     <input type="text" name="variablePath" id="variablePath" placeholder="Pfad zur Variable">
-    <input type="text" name="xmlFileName" id="xmlFileName" placeholder="Pfad zum XML">
     <button id="btnBuild">Xpath erstellen</button>
   </div>
-  <pre id="xpathExpressionOutput"></pre>
-  <div id="xpathValue"></div>
+  <div class="mainContainer">
+    <pre id="xpathExpressionOutput"></pre>
+    <div id="xpathValue"></div>
+  </div>
 </body>
 </html>

@@ -16,12 +16,12 @@ const namedElements = [
     name: "DVL",
   },
   {
-    shortcut: "LAY",
-    name: "Layout",
-  },
-  {
     shortcut: "TXK",
     name: "Textkörper",
+  },
+  {
+    shortcut: "LAY",
+    name: "Layout",
   },
   {
     shortcut: "ASL",
@@ -59,7 +59,6 @@ const refreshNames = (baseName, reanimgGrid, namedElements) => {
   reanimgGrid.append(button);
   
   button.addEventListener("click", () => {
-    console.log("Added: " + newName);
     navigator.clipboard.writeText(newName);
   });
   });

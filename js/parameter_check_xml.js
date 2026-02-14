@@ -21,14 +21,15 @@ const parseXML = (xmlString) => {
     if(textcontent !== undefined && textcontent.length > 0) {
       extractParametersFromText(textcontent, parameters);
     }
+
+    const executionContext = documentObject
+      .getElementsByTagName("executionContext")[0]
+      ?.getAttribute("pointInTime");
   
     // find variables in Logic
     const logicElements = Array.from(documentObject.getElementsByTagName("logic"));
   
     logicElements.forEach((logicElement) => {
-      const executionContext = logicElement
-        .getElementsByTagName("executionContext")[0]
-        ?.getAttribute("pointInTime");
       
       extractParametersFromLogicElement(
         executionContext,
@@ -38,24 +39,27 @@ const parseXML = (xmlString) => {
     });
   
     createResultTable(parameters, table, index === 0, objectId);
+  });  
+}
+
+document.addEventListener("DOMContentLoaded", function() {  
+  const btnCheck = document.getElementById('btnCheck');
+  const fileInput = document.getElementById("fileInput");
+
+  fileInput.addEventListener("change", function(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    readFile(file, btnCheck);
   });
+
+  if(fileInput.files.length > 0) {
+    readFile(fileInput.files[0], btnCheck);
+  } else {
+    btnCheck.disabled = true;
+  }
   
-}
-
-const openXML = (xmlFilePath) => {
-  fetch("/xml/" + xmlFilePath)
-  .then(response => response.text())
-  .then(xmlString => {
+  
+  btnCheck.addEventListener("click", () => {
     parseXML(xmlString);
-  })
-  .catch(err => console.error(err));
-}
-
-document.addEventListener("DOMContentLoaded", function() {
- const pathToXML = document.getElementById('pathToXML');
- const btnCheck = document.getElementById('btnCheck');
-
- btnCheck.addEventListener("click", () => {
-  const xmlDoc = openXML( pathToXML.value);
- });
+  });
 });

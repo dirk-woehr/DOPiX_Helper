@@ -1,5 +1,27 @@
 #reanimgGrid {
-    display: inline-grid;
+    display: grid;
     grid-template-columns: 1fr 3fr 2fr;
-    gap: 10px;
+    margin-top: 20px;
+    width: min(800px, 90vw);
+    div {
+        display: flex;
+        align-items: center;
+        padding: 0 calc(var(--gap) * 4);
+    }
+    &> *:nth-child(3n + 1) {
+        justify-content: center;
+    }
+    &> *:nth-child(3n + 2) {
+        justify-content: center;
+    }
+    &> *:nth-child(6n + 4) {
+        background-color:darkslategray;
+    }
+    &> *:nth-child(6n + 5) {
+        background-color: darkslategray;
+    }
+    button {
+        margin: var(--gap) calc(var(--gap) * 2);
+        width: 250px;
+    }
 }

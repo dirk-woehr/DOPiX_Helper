@@ -1,3 +1,47 @@
+:root {
+  /* paddings gaps and margins */
+  --gap: 6px;
+  --padding-vert: calc(var(--gap) * 2);
+  --padding-horz: var(--gap);
+
+  /* colors */
+  --text-color: white;
+  --background-color-rgb: 0, 54, 67;
+  --background-color: rgb(var(--background-color-rgb));
+
+  /* tables */
+  --table-head-color-rgb: 0, 159, 224;
+  --table-head-color: rgba(var(--table-head-color-rgb), 0.8);
+  --table-even-row-color: rgb(var(--table-head-color-rgb), 0.1);
+  --table-border-color: var(--table-even-row-color);
+  --table-subhead-color: var(--table-even-row-color);
+  --table-head-text-color: white;
+
+  /* pseudo content */
+  --green-check: "✅";
+  --red-error: "❌";
+
+  /* nav items */
+  --nav-item-background-color-rgb: 0, 128, 132;
+  --nav-item-background-color: rgb(var(--nav-item-background-color-rgb));
+  --nav-item-background-color-hover: rgba(var(--nav-item-background-color-rgb), 0.5);
+  --nav-item-text-color: white;
+  --nav-width: min(90vw, 320px);
+
+  /* form items */
+  --input-border: #9DD9D2;
+  --input-placeholder: #99c7c2;;
+
+  /* buttons */
+  --button-background-color-rgb: 166, 22, 128;
+  --button-background-color: rgb( var(--button-background-color-rgb));
+  --button-background-hover: rgba( var(--button-background-color-rgb), 0.5);
+ 
+  --file-input-background-color-rgb: 0, 102, 179;
+  --file-input-background-color: rgb( var(--file-input-background-color-rgb));
+  --file-input-background-hover: rgba( var(--file-input-background-color-rgb), 0.5);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -5,32 +49,50 @@
 html {
   font-family: "Raleway", sans-serif;
   font-style: normal;
+  /* css properties */
+  padding: 0;
+  margin: 0;
+  min-height: 100svh;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+h1 {
+  padding: 0 calc(var(--gap) * 2);
 }
 
 ul#nav {
   list-style-type: none;
   display: flex;
-  gap: 6px;
+  gap: calc(var(--gap) * 3);
   flex-direction: column;
-  width: min(90vw, 300px);
-  padding: 0;
+  width: var(--nav-width);
+  padding: calc(var(--gap) * 2);
   li {
     a {
-      background-color:#9DD9D2;
+      background-color: var(--nav-item-background-color);
       font-size: 18px;
       font-weight: 800;
-      color: black;
+      color: var(--nav-item-text-color);
       padding: 12px 36px;
       text-decoration: none;
       border-radius: 6px;
       display: block;
+      &:hover {
+        background-color: var(--nav-item-background-color-hover);
+      }
     }
   }
 }
 
 button {
   border: none;
-  background-color:#FF8811;
+  background-color: var(--button-background-color);
   font-size: 18px;
   font-weight: 800;
   color: white;
@@ -39,25 +101,59 @@ button {
   border-radius: 6px;
   display: inline-block;
   width: min(90vw, 640px);
+  &:hover {
+    background-color: var(--button-background-hover);
+  }
+  &:disabled {
+    opacity: 0.3;
+  }
+}
+
+input[type=file] {
+  font-size: 18px;
+  &::file-selector-button {
+  border: none;
+  background-color: var(--file-input-background-color);
+  font-size: 18px;
+  font-weight: 800;
+  color: white;
+  padding: 12px 36px;
+  text-decoration: none;
+  border-radius: 6px;
+  display: inline-block;
+  &:hover {
+    background-color: var(--file-input-background-hover);
+  }
+}
 }
 
 input[type="text"] {
   padding: 12px 36px;
   font-size: 18px;
   border-radius: 6px;
-  border-color: #9DD9D2;
+  border-color: var(--input-border);
   border-style: solid;
   width: min(90vw, 640px);
   &::placeholder {
-    color: #99c7c2;
+    color: var(--input-placeholder);
     font-style: italic;
   }
+}
+
+input {
+  background-color: #003643;
+  color: white;
 }
 
 .formContainer {
   width: min(90vw, 640px);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--padding-vert);
+  padding-left: var(--padding-vert);
   margin-bottom: 12px;
+}
+
+.mainContainer {
+  padding-left: var(--padding-vert);
 }

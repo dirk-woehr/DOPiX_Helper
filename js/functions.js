@@ -3,8 +3,6 @@ document.addEventListener("DOMContentLoaded", function() {
   const selector = document.getElementById('selector');
   const btnAdd = document.getElementById('btnAdd');
   let counter = 0;
-
-  console.log({selector, functions});
   
   functions.forEach((fnct, index) => {
     const option = document.createElement("option");
@@ -14,7 +12,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     option.innerHTML = fnct.name;
     selector.appendChild(option);
-    console.log({fnct, option});
   });
 
   btnAdd.addEventListener("click", () => {
@@ -33,7 +30,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     createRow(name, counter, fields)
-    console.log(fnct);
     
   })
   

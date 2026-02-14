@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/parameter_check_xml.css">
+  <script src="/js/global_functions.js"></script>
   <script src="/js/parameter_check_xml_funtions.js"></script>
   <script src="/js/parameter_check_xml.js"></script>
   <title>⚙ DOPiX Parameter Check XML</title>
@@ -23,11 +24,10 @@
       <a href="/index.html">🏠 Home</a>
     </li>
   </ul>
-  <div class="formContainer">
-    <input type="text" name="pathToXML" id="pathToXML" placeholder="XML-Dokument">
+  <div class="formContainer">    
+    <input type="file" id="fileInput" />
     <button id="btnCheck">Parameter Check</button>
   </div>
-  <div id="result"></div>
   <table id="table"></table>
 </body>
 
