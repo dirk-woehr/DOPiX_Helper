@@ -1,22 +1,36 @@
-#xpathExpressionOutput {
+.xpathExpression {
   color: rgb(74, 192, 153);
   padding: 12px 36px;
   font-size: 16px;
+  grid-area: xpath;
 }
 
-#xpathValue {
+.xpathValue {
   background-color: darkgreen;
   color: aliceblue;
   font-size: 24px;
   padding: 12px 36px;
   display: inline-block;
   border-radius: 6px;
+  grid-area: variableValue;
 }
 
-#xpathValue:empty {
+.variablePath {
+  grid-area: variablePath;
+}
+
+.xpathValue:empty {
   display: none;
 }
 
-#xpathExpressionOutput.error {
+.xpathExpressionOutput.error {
   color: darkred;
 }
+
+.varContainer {
+  display: grid;
+  grid-template:
+    'variablePath variableValue'
+    'xpath xpath';
+}
+

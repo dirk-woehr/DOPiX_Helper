@@ -23,12 +23,28 @@
   </ul>
   <div class="formContainer">
     <input type="file" id="fileInput" />
-    <input type="text" name="variablePath" id="variablePath" placeholder="Pfad zur Variable">
-    <button id="btnBuild">Xpath erstellen</button>
+    <div class="varContainer">
+      <div class="varPathContainer">
+        <input type="text" class="variablePath" placeholder="Pfad zur Variable">
+        <span id="ogAdd">⊕</span>
+      </div>
+      <pre class="xpathExpression"></pre>
+      <div class="xpathValue"></div>
+    </div>
   </div>
-  <div class="mainContainer">
-    <pre id="xpathExpressionOutput"></pre>
-    <div id="xpathValue"></div>
-  </div>
+  <button id="btnBuild">Xpath erstellen</button>
+
+  <template id="rowTemplate">
+    <div class="varContainer">
+      <div class="varPathContainer">
+        <input type="text" class="variablePath" placeholder="Pfad zur Variable">
+        <span class="btnAdd">⊕</span>
+        <span class="btnRemove">⊖</span>
+      </div>
+      <pre class="xpathExpression"></pre>
+      <div class="xpathValue"></div>
+    </div>
+  </template>
+
 </body>
 </html>

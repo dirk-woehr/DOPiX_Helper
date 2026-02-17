@@ -18,8 +18,36 @@ const buildPath = (variablePath, xpathExpressionOutput) => {
 
 }
 
-const openXML = (xmlString, xpathExpression) => {
-  const xpathValue = document.getElementById("xpathValue");
+const addEventToButton = (button, type) => {
+  button.addEventListener("click", () => {
+    switch (type) {
+      case "add":
+        addVarContainer();
+        break;
+      case "remove":
+        button.parentNode.parentNode.remove();
+        break;
+    }
+  });
+}
+
+const addVarContainer = () => {
+  const formContainer = document.querySelector(".formContainer");
+
+  const template = document.getElementById('rowTemplate');
+  const varInstance = document.importNode(template.content, true);
+  
+  console.log({varInstance, template});
+  const btnAdd = varInstance.querySelector(".btnAdd");
+  const btnRemove = varInstance.querySelector(".btnRemove");
+  
+  addEventToButton(btnAdd, "add");
+  addEventToButton(btnRemove, "remove");
+
+  formContainer.appendChild(varInstance);
+}
+
+const openXML = (xmlString, xpathExpression, xpathValue) => {
   const parser = new DOMParser();
   const xmlDoc = parser.parseFromString(xmlString, "text/xml");
 
@@ -36,9 +64,12 @@ const openXML = (xmlString, xpathExpression) => {
 
 document.addEventListener("DOMContentLoaded", function () {
 
-  const xpathExpressionOutput = document.getElementById("xpathExpressionOutput");
-  const xpathValue = document.getElementById("xpathValue");
   const btnBuild = document.getElementById("btnBuild");
+  const formContainer = document.getElementsByClassName("formContainer")[0];
+
+  const ogAdd = document.getElementById("ogAdd");
+  addEventToButton(ogAdd, "add");
+
   btnBuild.disabled = true;
   
   document.getElementById("fileInput").addEventListener("change", function(event) {
@@ -46,30 +77,36 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!file) return;
     readFile(file, btnBuild);
   });
-
+  
   if(fileInput.files.length > 0) {
     readFile(fileInput.files[0], btnBuild);
   } else {
-    btnCheck.disabled = true;
+    btnBuild.disabled = true;
   }
   
-  btnBuild.addEventListener("click", () => {
+  btnBuild.addEventListener("click", () => {    
+    const varContainers = Array.from(document.getElementsByClassName("varContainer"));
+    varContainers.forEach((varContainer) => {
+      const xpathExpressionOutput = varContainer.getElementsByClassName("xpathExpression")[0];
+      const xpathValue = varContainer.getElementsByClassName("xpathValue")[0];
+      const variablePath = varContainer.getElementsByClassName("variablePath")[0].value;
+      xpathExpressionOutput.classList.remove("error");
 
-    xpathExpressionOutput.classList.remove("error");
-
-    const variablePath = document.getElementById("variablePath").value;
-    if (variablePath && variablePath.length > 0) {
-      const xpathExpression = buildPath(variablePath, xpathExpressionOutput);
-      if (xmlString && xmlString.length > 1) {
-        openXML(xmlString, xpathExpression, xpathValue)
+      console.log({varContainer});
+  
+      if (variablePath && variablePath.length > 0) {
+        const xpathExpression = buildPath(variablePath, xpathExpressionOutput);
+        if (xmlString && xmlString.length > 1) {
+          openXML(xmlString, xpathExpression, xpathValue)
+        } else {
+          xpathExpressionOutput.classList.add("error");
+          xpathExpressionOutput.innerHTML = "Filename fehlt"
+        }
       } else {
         xpathExpressionOutput.classList.add("error");
-        xpathExpressionOutput.innerHTML = "Filename fehlt"
+        xpathExpressionOutput.innerHTML = "Variablenpfad fehlt"
       }
-    } else {
-      xpathExpressionOutput.classList.add("error");
-      xpathExpressionOutput.innerHTML = "Variablenpfad fehlt"
-    }
+    });
   })
 
 });

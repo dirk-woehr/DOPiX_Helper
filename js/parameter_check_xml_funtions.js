@@ -165,10 +165,6 @@ const createResultTable = (parameters, table, clearTable, objectId, objectType) 
 
   let isEven = false;
 
-  if(objectType === "stencil") {
-    console.log({parameterNames, objectId})
-  }
-
   parameterNames.forEach((parameterName) => {
     const parameter = parameters[parameterName];
     const isUsedInText = parameter.inText;
