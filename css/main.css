@@ -12,7 +12,7 @@
   /* tables */
   --table-head-color-rgb: 0, 159, 224;
   --table-head-color: rgba(var(--table-head-color-rgb), 0.8);
-  --table-even-row-color: rgb(var(--table-head-color-rgb), 0.1);
+  --table-even-row-color: rgb(var(--table-head-color-rgb), 0.075);
   --table-border-color: var(--table-even-row-color);
   --table-subhead-color: var(--table-even-row-color);
   --table-head-text-color: white;

@@ -1,3 +1,9 @@
+/**
+ * collect parameters that are set in 
+ * @param { string } paramElements - Elements containing set parameters
+ * @param { string } parameters - Collection of used parameters
+ */
+
 const collectParameters = (paramElements, parameters) => {
   for (let elem of paramElements) {
     const parameter = elem.getAttribute("refid");
@@ -6,6 +12,7 @@ const collectParameters = (paramElements, parameters) => {
       inText: false,
       logic: {} 
     }
+    setParameters.add(parameter);
   }
 }
 
@@ -97,19 +104,22 @@ const collectParametersFromLogic = (
       } else {
         parameters[param] = {
           inParam: false,
-          inText: true,
-          logic: {}
+          inText: false,
+          logic: {
+            [pathToLogicString]: logicString
+          }
         }
       }
     });
   }
 }
 
-const createResultTable = (parameters, table, clearTable, objectId) => {
-  const colspan = 4;
+const createResultTable = (parameters, table, clearTable, objectId, objectType) => {
   if(clearTable) {
     table.innerHTML = "";
   }
+
+  console.table(parameters)
 
   const trObjectId = document.createElement("tr");
   const thObjectId = document.createElement("th");
@@ -155,12 +165,18 @@ const createResultTable = (parameters, table, clearTable, objectId) => {
 
   let isEven = false;
 
-  parameterNames.forEach((parameter) => {
-    const isUsedInText = parameters[parameter].inText;
-    const logic = parameters[parameter].logic;
+  if(objectType === "stencil") {
+    console.log({parameterNames, objectId})
+  }
+
+  parameterNames.forEach((parameterName) => {
+    const parameter = parameters[parameterName];
+    const isUsedInText = parameter.inText;
+    const logic = parameter.logic;
     const logicKeys = Object.keys(logic);
     const isUsed = isUsedInText || logicKeys.length > 0;
-    const isSet = parameters[parameter].inParam;
+    const isSetOutsideStencil = objectType === "stencil" && setParameters.has(parameterName);
+    const isSet = parameter.inParam || isSetOutsideStencil;
     
     
     // create row
@@ -174,7 +190,7 @@ const createResultTable = (parameters, table, clearTable, objectId) => {
     const tdVar = document.createElement("td");
     const spanVar = document.createElement("span");
     const cssClass = isUsed && isSet ? "correct" : "incorrect";
-    spanVar.innerHTML = parameter;
+    spanVar.innerHTML = parameterName;
     spanVar.classList.add(cssClass);
     tdVar.appendChild(spanVar);
     tr.appendChild(tdVar);
@@ -217,5 +233,139 @@ const createResultTable = (parameters, table, clearTable, objectId) => {
     table.appendChild(tr);
   });
 
+}
 
+const createObjectRows = (table) => {
+  const trObjectUsage = document.createElement("tr");
+  const thObjectId = document.createElement("th");
+  thObjectId.innerHTML = "Verwendete Objekte";
+  thObjectId.setAttribute("colspan", colspan);
+  thObjectId.classList.add("columnHeadMain");
+  trObjectUsage.appendChild(thObjectId);
+  table.appendChild(trObjectUsage);
+
+  const headRow = document.createElement("tr");
+
+  const thName = document.createElement("th");  
+  thName.innerHTML = "Objektname";
+  thName.classList.add("columnHead");  
+  headRow.appendChild(thName);
+
+  const thUsed = document.createElement("th");
+  thUsed.innerHTML = "Wird verwendet";
+  thUsed.classList.add("columnHead");
+  headRow.appendChild(thUsed);
+
+  const thInProcess = document.createElement("th");
+  thInProcess.innerHTML = "Im Prozess";
+  thInProcess.classList.add("columnHead");
+  headRow.appendChild(thInProcess);
+
+  const thHint = document.createElement("th");
+  thHint.innerHTML = "Hinweis";
+  thHint.classList.add("columnHead");
+  headRow.appendChild(thHint);
+
+  table.appendChild(headRow);
+
+  let isEven = false;
+  
+  Object.keys(objects).forEach((objName) => {
+    const obj = objects[objName];
+
+    console.table({object: objects[objName]});
+
+    const trObj = document.createElement("tr");
+    if(isEven) {
+      trObj.classList.add("even");
+    }
+    isEven = !isEven;
+
+    const tdObjName = document.createElement("td");
+    tdObjName.innerHTML = objName;
+    trObj.appendChild(tdObjName);
+
+    const tdObjUsed = document.createElement("td");
+    tdObjUsed.innerHTML = obj.isUsed ? "☑" : "☐";;
+    trObj.appendChild(tdObjUsed);
+
+    const tdObjInProcess = document.createElement("td");
+    tdObjInProcess.innerHTML = obj.isInProcess ? "☑" : "☐";;
+    trObj.appendChild(tdObjInProcess);
+
+    const tdObjDescription = document.createElement("td");
+    if(!(obj.isUsed && obj.isInProcess)) {
+      tdObjDescription.innerHTML = obj.isInProcess 
+      ? "Objekt nicht verwendet" 
+      : "Externes Objekt";
+    }
+    trObj.appendChild(tdObjDescription);
+
+    table.appendChild(trObj);
+  });
+
+}
+
+const createVariableRows = (table, variables, parameters) => {
+  const trVarObjects = document.createElement("tr");
+  const thVarObjects = document.createElement("th");
+  thVarObjects.innerHTML = "Variablen im Prozess";
+  thVarObjects.setAttribute("colspan", colspan);
+  thVarObjects.classList.add("columnHeadMain");
+  trVarObjects.appendChild(thVarObjects);
+  table.appendChild(trVarObjects);
+  
+  const headRow = document.createElement("tr");
+  
+  const thName = document.createElement("th");  
+  thName.innerHTML = "Variablenname";
+  thName.classList.add("columnHead");  
+  headRow.appendChild(thName);
+  
+  const thUsed = document.createElement("th");
+  thUsed.innerHTML = "Wird verwendet";
+  thUsed.classList.add("columnHead");
+  headRow.appendChild(thUsed);
+  
+  const thBlank = document.createElement("th");
+  thBlank.setAttribute("colspan", colspan-2);
+  thBlank.classList.add("columnHead");
+  headRow.appendChild(thBlank);
+
+  table.appendChild(headRow);
+
+  let isEven = false;
+
+  variables.forEach((variable) => {
+    const variableName = variable.getAttribute("id");
+    const isUsed = parameters.has(variableName);
+
+    const trVar = document.createElement("tr");
+    if(isEven) {
+      trVar.classList.add("even");
+    }
+    isEven = !isEven;
+
+    const cssClass = isUsed ? "correct" : "incorrect";
+
+    const tdVar = document.createElement("td");
+    const spanVar = document.createElement("span");
+    spanVar.innerHTML = variableName;
+    spanVar.classList.add(cssClass);
+    tdVar.appendChild(spanVar);
+    trVar.appendChild(tdVar);
+
+    // create param cell
+    const tdUsed = document.createElement("td");
+    tdUsed.innerHTML = isUsed ? "☑" : "☐";
+    trVar.appendChild(tdUsed);
+
+    // create param cell
+    const tdBlank = document.createElement("td");
+    tdBlank.setAttribute("colspan", colspan-2);
+    trVar.appendChild(tdBlank);
+
+    table.appendChild(trVar);
+
+  });
 }
