@@ -56,13 +56,75 @@ span.incorrect::before {
   margin-right: 10px;
 }
 
-.divLog {
-  height: auto;
-  transition: height 0.616s ease;
-  overflow-y: hidden;
-  interpolate-size: allow-keywords;
+.logicCount {
+  cursor: pointer;
 }
 
-.divLog.hide {
-  height: 0px;
+.divLog {
+  height: auto;
+  transition: height 0.616s ease, margin 0.616s ease;
+  overflow-y: hidden;
+  interpolate-size: allow-keywords;
+  display: grid;
+  gap: 15px;
+  box-sizing: border-box;
+  grid-template-columns: 2fr 1fr 1fr;
+  width: 40vw;
+  margin-top: var(--padding-vert);
+  &.hide {
+    height: 0px;
+    margin: 0;
+  }
+}
+
+.subGrid {
+  grid-column: 1 / 4;
+  display: grid;
+  grid-row: span 2;
+  grid-template-areas:
+    "executionContext logicType logicSubType"
+    "logicContent logicContent logicContent";
+  grid-template-columns: subgrid;
+  grid-template-rows: subgrid;
+}
+
+.executionContext {
+  grid-area: executionContext;
+}
+
+.logicType {
+  grid-area: logicType;
+}
+
+.logicSubType {
+  grid-area: logicSubType;
+}
+
+.logicContent {
+  grid-area: logicContent;
+  background-color: rgb(60, 80, 89);
+  padding: 3px 1px;
+  margin: 0;
+}
+.tag {
+  --color-base: 255, 140, 0;
+  &.onComponentSelection {
+    --color-base: 81, 190, 17;
+  }
+  &.onComponentDeSelection {
+    --color-base: 14, 151, 133;
+  }
+
+  padding: var(--padding-horz) var(--padding-vert);
+  border-radius: 4px;
+  text-align: center;
+  &.executionContext {
+    background-color: rgb(var(--color-base));
+  }
+  &.logicType {
+    background-color: rgba(var(--color-base), 0.75);
+  }
+  &.logicSubType {
+    background-color: rgba(var(--color-base), 0.5);
+  }
 }

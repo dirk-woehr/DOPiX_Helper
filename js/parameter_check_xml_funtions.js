@@ -1,3 +1,43 @@
+const typeNames = {
+  executionContext: {
+    onDocumentPreparation: "Vor der Bausteinauswahl",
+    onComponentSelection: "Beim Auswählen in der Bausteinauswahl",
+    onComponentDeSelection: "Beim Abwählen in der Bausteinauswahl",
+  },
+  logicType: {
+    basiclogic: "Basislogik",
+    extendedlogic: "Erweiterte Logik",
+  },
+  logicSubType: {
+    condition: "Bedingung",
+    action: "Aktion/Befehl"
+  }
+}
+
+const sortExecutionContextKeys = (keys) => {
+  const onDocumentPreparation = [];
+  const onComponentSelection = [];
+  const onComponentDeSelection = [];
+
+  keys.forEach(key => {
+    if(key.startsWith("onDocumentPreparation")) {
+      onDocumentPreparation.push(key);
+    }
+    if(key.startsWith("onComponentSelection")) {
+      onComponentSelection.push(key);
+    }
+    if(key.startsWith("onComponentDeSelection")) {
+      onComponentDeSelection.push(key);
+    }
+  });
+
+  return [
+    ...onDocumentPreparation,
+    ...onComponentSelection,
+    ...onComponentDeSelection,
+  ]
+}
+
 /**
  * collect parameters that are set in 
  * @param { string } paramElements - Elements containing set parameters
@@ -68,7 +108,7 @@ const extractParametersFromLogicElement = (
           const logicString = logicSubTypeElement.getAttribute("value");
           if(logicString && logicString.length > 0) {
             collectParametersFromLogic(
-              executionContext + " | " + logicTypeString + " | " + logicSubTypeString + " | " + index + " | ",
+              [executionContext, logicTypeString, logicSubTypeString, index],
               logicString,
               parameters
             );
@@ -89,29 +129,61 @@ const extractParametersFromLogicElement = (
 */
 
 const collectParametersFromLogic = (
-  pathToLogicString,
+  logicPathKeys,
   logicString,
   parameters
 ) => {
+  
+  const [executionContext, logicTypeString, logicSubTypeString, index] = logicPathKeys;
+  const pathToLogicString =  executionContext + " | " + logicTypeString + " | " + logicSubTypeString + " | " + index;  
   const matches = logicString.match(/&[A-Z0-9_]*/g);
   if(matches && matches.length) {
     matches.forEach((match) => {
       const param = match.replace("&", "");
       if(parameters[param] !== undefined) {
         if(parameters[param].logic[pathToLogicString] === undefined) {
-          parameters[param].logic[pathToLogicString] = logicString;
+          parameters[param].logic[pathToLogicString] = {
+              logicString,
+              logicPathKeys
+            };
         }
       } else {
         parameters[param] = {
           inParam: false,
           inText: false,
           logic: {
-            [pathToLogicString]: logicString
+            [pathToLogicString]: {
+              logicString,
+              logicPathKeys
+            }
           }
         }
       }
     });
   }
+}
+
+/**
+ * Appends a tag to a parent child
+ * @param { string } content - text for the tsg
+ * @param { HTMLElement } parent - parent to append the tag to
+ * @param { string[] } [classList] - list of HTML classes
+*/
+const appendTag = (content, parent, classList) => {
+  const tag = document.createElement("div");
+  tag.classList.add(...classList, "tag");
+  tag.innerHTML = content;
+  parent.appendChild(tag);
+}
+
+/**
+ * Translates type IDs to text
+ * @param { string } typeID - text for the tag
+ * @param { string } type - parent to append the tag to
+ * @param { string[] } [classList] - list of HTML classes
+*/
+const translateTypeID = (type, typeID) => {
+  return typeNames[type][typeID];
 }
 
 const createResultTable = (parameters, table, clearTable, objectId, objectType) => {
@@ -167,8 +239,7 @@ const createResultTable = (parameters, table, clearTable, objectId, objectType) 
 
   parameterNames.forEach((parameterName) => {
     const parameter = parameters[parameterName];
-    const isUsedInText = parameter.inText;
-    const logic = parameter.logic;
+    const {inText: isUsedInText, logic} = parameter;
     const logicKeys = Object.keys(logic);
     const isUsed = isUsedInText || logicKeys.length > 0;
     const isSetOutsideStencil = objectType === "stencil" && setParameters.has(parameterName);
@@ -204,21 +275,76 @@ const createResultTable = (parameters, table, clearTable, objectId, objectType) 
     // create param cell
     const tdLog = document.createElement("td");
     tdLog.classList.add("tdLog");
-    tdLog.addEventListener("click", () => {
-      const divLogs = tdLog.getElementsByTagName("div");
+
+    const logicCount = document.createElement("div");
+    logicCount.innerHTML = Object.keys(logic).length;
+    logicCount.classList.add("logicCount");
+    logicCount.addEventListener("click", () => {
+      const divLogs = tdLog.querySelectorAll("div.divLog");
       if(divLogs.length === 0) return;
       divLogs[0].classList.toggle("hide");
     });
-    const spanLog = document.createElement("span");
-    spanLog.innerHTML = Object.keys(logic).length;
-    tdLog.appendChild(spanLog);
+    tdLog.appendChild(logicCount);
+
     if(Object.keys(logic).length > 0) {
+      let executionContextMain = null;
+      let logicTypeMain = null;
+      let logicSubTypeMain = null;
       const divLog = document.createElement("div");
       divLog.classList.add("divLog", "hide");
-      logicKeys.forEach((logicKey) => {
+      const sortedKeys = sortExecutionContextKeys(logicKeys);
+      sortedKeys.forEach((logicKey) => {
+        const {logicString, logicPathKeys} = logic[logicKey];
+        const [executionContext, logicTypeString, logicSubTypeString, index] = logicPathKeys;
+        
+        const subGrid = document.createElement("div");
+        subGrid.classList.add("subGrid");
+
+        let addChildHeader = false;
+        
+        if(executionContext !== executionContextMain) {
+          executionContextMain = executionContext;
+          addChildHeader = true;
+          const executionContextTag = document.createElement("div");
+          executionContextTag.classList.add("executionContext");
+          appendTag(
+            translateTypeID("executionContext", executionContext),
+            executionContextTag,
+            ["executionContext", executionContext]
+          );
+          subGrid.appendChild(executionContextTag);
+        }
+
+        if(logicTypeString !== logicTypeMain || addChildHeader) {
+          logicTypeMain = logicTypeString;
+          addChildHeader = true;
+          const logicTypeTag = document.createElement("div");
+          logicTypeTag.classList.add("logicType");
+          appendTag(
+            translateTypeID("logicType", logicTypeString),
+            logicTypeTag,
+            ["logicType", executionContext]
+          );
+          subGrid.appendChild(logicTypeTag);
+        }
+        
+        if(logicSubTypeString !== logicSubTypeMain || addChildHeader) {
+          logicSubTypeMain = logicSubTypeString;
+          const logicSubTypeTag = document.createElement("div");
+          logicSubTypeTag.classList.add("logicSubType");
+          appendTag(
+            translateTypeID("logicSubType", logicSubTypeString),
+            logicSubTypeTag,
+            ["logicSubType", executionContext]
+          );
+          subGrid.appendChild(logicSubTypeTag);
+        }
+
         const preLog = document.createElement("pre");
-        preLog.innerHTML = logicKey + "\n" + logic[logicKey];
-        divLog.appendChild(preLog);
+        preLog.classList.add("logicContent");
+        preLog.innerHTML = zeroPad(index + 1, 2) + ": " + logicString;
+        subGrid.appendChild(preLog);
+        divLog.appendChild(subGrid);
       });
       tdLog.appendChild(divLog);
     }

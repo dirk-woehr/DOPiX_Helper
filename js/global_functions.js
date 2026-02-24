@@ -13,3 +13,5 @@ const readFile = (file, button) => {
     };
     reader.readAsText(file);
 }
+
+const zeroPad = (num, places) => String(num).padStart(places, '0');

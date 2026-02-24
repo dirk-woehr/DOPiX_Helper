@@ -10,3 +10,11 @@ https://textadapter.dev.kvneo.net/ui/dokumenterstellung/interaktiv/cfc2ec29-14c8
 
 # Datenmapping / Logikverwaltung
 https://extranet.sdk.de/wikip/spaces/TSIPKI/pages/799713040/Datenmapping+Logikverarbeitung
+
+# Fragen Textadapter
+* Daten immer selbst anlegen?
+* Welches Objekt bei VertragUtils.getDruckAufgabendaten
+  Immer: fachdatenHealthPolicy.bearbeitungsauftrag.aufgabendaten?
+* vordefinierte variablen an zentraler stelle oder nach beim code?
+
+* Schleifen teilen oder lieber mehrfach durchlaufen?

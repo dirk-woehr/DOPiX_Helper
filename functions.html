@@ -25,9 +25,23 @@
     <select name="selector" id="selector"></select>
     <button id="btnAdd">Hinzufügen</button>
   </div>
+  <div class="functionContainer"></div>
   <table>
     <tbody id="functionsTable"></tbody>
   </table>
+  <template>
+    <form class="funtionField">
+      <div class="typeRow">
+        <input type="radio" name="fieldType" id="fieldType_string">
+        <label for="fieldType_string">String</label>
+        <input type="radio" name="fieldType" id="fieldType_param">
+        <label for="fieldType_param">Parameter</label>
+        <input type="radio" name="fieldType" id="fieldType_plain">
+        <label for="fieldType_param">Zahl / Funktion</label>
+      </div>
+      <input type="text" name="fieldValue" id="fieldValue">
+    </form>
+  </template>
 </body>
 
 </html>

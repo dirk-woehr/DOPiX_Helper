@@ -1,8 +1,12 @@
+.formContainer {
+  width: 90vw;
+}
+
 .xpathExpression {
   color: rgb(74, 192, 153);
   padding: 12px 36px;
   font-size: 16px;
-  grid-area: xpath;
+  grid-area: xpathExpression;
 }
 
 .xpathValue {
@@ -12,14 +16,28 @@
   padding: 12px 36px;
   display: inline-block;
   border-radius: 6px;
-  grid-area: variableValue;
+  grid-area: xpathValue;
 }
 
 .variablePath {
   grid-area: variablePath;
 }
 
-.xpathValue:empty {
+.varPathContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--padding-horz);
+  font-size: 18px;
+  cursor: pointer;
+  grid-area: variablePath;
+  span {
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+}
+
+.xpathValue:empty, .xpathExpression:empty {
   display: none;
 }
 
@@ -29,8 +47,9 @@
 
 .varContainer {
   display: grid;
-  grid-template:
-    'variablePath variableValue'
-    'xpath xpath';
+  grid-template-columns: 4fr 5fr;
+  grid-template-areas:
+    'variablePath xpathValue'
+    'xpathExpression xpathExpression';
 }
 

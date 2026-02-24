@@ -37,10 +37,9 @@ const addVarContainer = () => {
   const template = document.getElementById('rowTemplate');
   const varInstance = document.importNode(template.content, true);
   
-  console.log({varInstance, template});
   const btnAdd = varInstance.querySelector(".btnAdd");
   const btnRemove = varInstance.querySelector(".btnRemove");
-  
+
   addEventToButton(btnAdd, "add");
   addEventToButton(btnRemove, "remove");
 

@@ -17,23 +17,99 @@
     <li>
       <a href="/renamer.html">⇆ Renamer</a>
     </li>
-<!--     
-    <li>
-      <a href="/xml_builder.html">🗈 XML Builder</a>
-    </li>
-    <li>
-      <a href="/functions.html">⨍ DOPiX Functions</a>
-    </li>
-    <li>
-      <a href="/parameter_check.html">⚙ Parameter Check</a>
-    </li>
--->
     <li>
       <a href="/parameter_check_xml.html">⚙ Parameter Check XML</a>
     </li>
     <li>
       <a href="/xpath_builder.html">🔗 Xpath Builder</a>
     </li>
+    <!--     
+      <li>
+        <a href="/functions.html">⨍ DOPiX Functions</a>
+      </li>
+      <li>
+        <a href="/xml_builder.html">🗈 XML Builder</a>
+      </li>
+      <li>
+        <a href="/parameter_check.html">⚙ Parameter Check</a>
+      </li>
+      -->
   </ul>
+  <style>
+    .mainGrid {
+        display: grid;
+        gap: 15px;
+        padding: 15px;
+        box-sizing: border-box;
+    }
+
+    .subGrid {
+      grid-column: 1 / 4;
+      display: grid;
+      grid-row: span 3;
+      grid-template-areas:
+        "topLeft topCent topRight"
+        "midLeft midCent midRight"
+        "botLeft botCent botRight";
+      grid-template-columns: subgrid;
+      grid-template-rows: subgrid;
+      div {
+        padding: 20px;
+        text-align: center;
+      }
+    }
+
+    .topLeft {
+      background-color: blue;
+    }
+    .topCent {
+      background-color: blueviolet;
+    }
+    .topRight {
+      background-color: brown;
+    }
+    .midLeft {
+      background-color: darkcyan;
+    }
+    .midCent {
+      background-color: darkgreen;
+    }
+    .midRight {
+      background-color: darkslateblue;
+    }
+    .botLeft {
+      background-color: darkolivegreen;
+    }
+    .botCent {
+      background-color: indigo;
+    }
+    .botRight {
+      background-color: saddlebrown;
+    }
+  </style>
+<!--   <div class="mainGrid">
+    <div class="subGrid">
+      <div class="topLeft">Oben Links</div>
+      <div class="topCent">Oben Mitte</div>
+      <div class="topRight">Oben Rechts</div>
+      <div class="midLeft">Mitte Links</div>
+      <div class="midCent">Mitte Mitte</div>
+      <div class="midRight">Mitte Rechts</div>
+      <div class="botLeft">Unten Links</div>
+      <div class="botCent">Unten Mitte</div>
+      <div class="botRight">Unten Rechts</div>
+    </div>
+    <div class="subGrid">
+      <div class="topLeft">Oben Links</div>
+      <div class="topCent">Oben Mitte</div>
+      <div class="topRight longLine">Oben Rechts. Aber echt langer Text, der auf jeden Fall mehr platz braucht, als alle anderen.</div>
+      <div class="midLeft">Mitte Links</div>
+      <div class="midCent">Mitte Mitte. Aber echt langer Text, der auf jeden Fall mehr platz braucht, als alle anderen.</div>
+      <div class="midRight">Mitte Rechts</div>
+      <div class="botLeft">Unten Links</div>
+      <div class="botCent">Unten Mitte</div>
+      <div class="botRight">Unten Rechts</div>
+    </div>
+  </div> -->
 </body>
 </html>
