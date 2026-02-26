@@ -31,6 +31,7 @@
   cursor: pointer;
   grid-area: variablePath;
   span {
+    font-size: 32px;
     &:hover {
       opacity: 0.5;
     }

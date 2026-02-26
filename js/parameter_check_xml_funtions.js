@@ -186,6 +186,14 @@ const translateTypeID = (type, typeID) => {
   return typeNames[type][typeID];
 }
 
+/**
+ * Translates type IDs to text
+ * @param { Object } parameters - collection of parameters in use
+ * @param { string } table - table to add rows
+ * @param { boolean } clearTable - clear table before filling
+ * @param { string } objectId - ID of DOPiX object
+ * @param { string } objectType - Type of DOPiX object
+*/
 const createResultTable = (parameters, table, clearTable, objectId, objectType) => {
   if(clearTable) {
     table.innerHTML = "";
@@ -193,6 +201,7 @@ const createResultTable = (parameters, table, clearTable, objectId, objectType) 
 
   console.table(parameters)
 
+  // create table head for object
   const trObjectId = document.createElement("tr");
   const thObjectId = document.createElement("th");
   thObjectId.innerHTML = objectId;
@@ -201,9 +210,10 @@ const createResultTable = (parameters, table, clearTable, objectId, objectType) 
   trObjectId.appendChild(thObjectId);
   table.appendChild(trObjectId);
 
-  
+  // collect parameter names
   const parameterNames = Object.keys(parameters);
   
+  // create column heads
   if(parameterNames.length > 0) {    
     const headRow = document.createElement("tr");
     const thVar = document.createElement("th");
@@ -224,6 +234,7 @@ const createResultTable = (parameters, table, clearTable, objectId, objectType) 
     headRow.appendChild(thLog);
     table.appendChild(headRow);
   } else {
+    // creat single column head if no parameters exist
     const trNoLogic = document.createElement("tr");
     const thNoLogic = document.createElement("th");
     thNoLogic.innerHTML = "Keine Logik vorhanden";
@@ -232,11 +243,12 @@ const createResultTable = (parameters, table, clearTable, objectId, objectType) 
     trNoLogic.appendChild(thNoLogic);
     table.appendChild(trNoLogic);
     return;
-
   }
 
+  // even toggle for row classes
   let isEven = false;
 
+  // create rows for parameters
   parameterNames.forEach((parameterName) => {
     const parameter = parameters[parameterName];
     const {inText: isUsedInText, logic} = parameter;
@@ -246,7 +258,7 @@ const createResultTable = (parameters, table, clearTable, objectId, objectType) 
     const isSet = parameter.inParam || isSetOutsideStencil;
     
     
-    // create row
+    // create parameter row
     const tr = document.createElement("tr");
     if(isEven) {
       tr.classList.add("even");
@@ -272,7 +284,7 @@ const createResultTable = (parameters, table, clearTable, objectId, objectType) 
     tdTxt.innerHTML = isUsedInText ? "☑" : "☐";
     tr.appendChild(tdTxt);
     
-    // create param cell
+    // create logic cell
     const tdLog = document.createElement("td");
     tdLog.classList.add("tdLog");
 
