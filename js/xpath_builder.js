@@ -63,25 +63,15 @@ const openXML = (xmlString, xpathExpression, xpathValue) => {
 
 document.addEventListener("DOMContentLoaded", function () {
 
+  const fileInput = document.getElementById("fileInput");
   const btnBuild = document.getElementById("btnBuild");
-  const formContainer = document.getElementsByClassName("formContainer")[0];
 
   const ogAdd = document.getElementById("ogAdd");
   addEventToButton(ogAdd, "add");
 
   btnBuild.disabled = true;
-  
-  document.getElementById("fileInput").addEventListener("change", function(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    readFile(file, btnBuild);
-  });
-  
-  if(fileInput.files.length > 0) {
-    readFile(fileInput.files[0], btnBuild);
-  } else {
-    btnBuild.disabled = true;
-  }
+
+  activateFileDialog(btnBuild, fileInput);
   
   btnBuild.addEventListener("click", () => {    
     const varContainers = Array.from(document.getElementsByClassName("varContainer"));

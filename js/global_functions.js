@@ -2,7 +2,7 @@ let xmlString = undefined;
 
 /**
  * @param { File } file - file from file input
- * @param { HTMLElement } button - Button to trigger file dialog
+ * @param { HTMLButtonElement } button - Button to trigger file dialog
 */
 
 const readFile = (file, button) => {
@@ -13,6 +13,25 @@ const readFile = (file, button) => {
       button.disabled = xmlString.length < 1;
     };
     reader.readAsText(file);
+}
+
+/**
+ * @param { HTMLButtonElement } button - Button to trigger file dialog
+ * @param { HTMLInputElement } fileInput - file from file input
+*/
+
+const activateFileDialog = (button, fileInput) => {
+  fileInput.addEventListener("change", function(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    readFile(file, button);
+  });
+
+  if(fileInput.files.length > 0) {
+    readFile(fileInput.files[0], btnCheck);
+  } else {
+    button.disabled = true;
+  }
 }
 
 /**

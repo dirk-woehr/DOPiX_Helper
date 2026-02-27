@@ -103,18 +103,7 @@ document.addEventListener("DOMContentLoaded", function() {
   const btnCheck = document.getElementById('btnCheck');
   const fileInput = document.getElementById("fileInput");
 
-  fileInput.addEventListener("change", function(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    readFile(file, btnCheck);
-  });
-
-  if(fileInput.files.length > 0) {
-    readFile(fileInput.files[0], btnCheck);
-  } else {
-    btnCheck.disabled = true;
-  }
-  
+  activateFileDialog(btnCheck, fileInput);  
   
   btnCheck.addEventListener("click", () => {
     parseXML(xmlString);
