@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", function() {
     
     result.innerHTML = "";
 
-    console.table(parameters);
     parameters.forEach(parameter => {
       const resultParam = document.createElement("p");
       resultParam.innerHTML = parameter;

@@ -80,8 +80,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const xpathValue = varContainer.getElementsByClassName("xpathValue")[0];
       const variablePath = varContainer.getElementsByClassName("variablePath")[0].value;
       xpathExpressionOutput.classList.remove("error");
-
-      console.log({varContainer});
   
       if (variablePath && variablePath.length > 0) {
         const xpathExpression = buildPath(variablePath, xpathExpressionOutput);

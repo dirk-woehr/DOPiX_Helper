@@ -92,7 +92,9 @@ const parseXML = (xmlString) => {
 
   createObjectRows(table);
 
-  createVariableRows(table, variables, setParameters);
+  createVariableRows(table, variables);
+
+  collectReferences(xmlDoc, table);
 
 }
 

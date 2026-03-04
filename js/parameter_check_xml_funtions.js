@@ -199,8 +199,6 @@ const createResultTable = (parameters, table, clearTable, objectId, objectType) 
     table.innerHTML = "";
   }
 
-  console.table(parameters)
-
   // create table head for object
   const trObjectId = document.createElement("tr");
   const thObjectId = document.createElement("th");
@@ -407,8 +405,6 @@ const createObjectRows = (table) => {
   Object.keys(objects).forEach((objName) => {
     const obj = objects[objName];
 
-    console.table({object: objects[objName]});
-
     const trObj = document.createElement("tr");
     if(isEven) {
       trObj.classList.add("even");
@@ -440,7 +436,7 @@ const createObjectRows = (table) => {
 
 }
 
-const createVariableRows = (table, variables, parameters) => {
+const createVariableRows = (table, variables) => {
   const trVarObjects = document.createElement("tr");
   const thVarObjects = document.createElement("th");
   thVarObjects.innerHTML = "Variablen im Prozess";
@@ -472,7 +468,7 @@ const createVariableRows = (table, variables, parameters) => {
 
   variables.forEach((variable) => {
     const variableName = variable.getAttribute("id");
-    const isUsed = parameters.has(variableName);
+    const isUsed = setParameters.has(variableName);
 
     const trVar = document.createElement("tr");
     if(isEven) {
