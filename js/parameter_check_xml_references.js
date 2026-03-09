@@ -125,6 +125,7 @@ const collectReferences = (xmlDoc, table) => {
   const trReferencesHead = document.createElement("tr");
   const thReferences = document.createElement("th");
   thReferences.innerHTML = "Verweise";
+  addAnchor(thReferences, "references", {top: "-96px"});
   thReferences.setAttribute("colspan", colspan);
   thReferences.classList.add("columnHeadMain");
   trReferencesHead.appendChild(thReferences);

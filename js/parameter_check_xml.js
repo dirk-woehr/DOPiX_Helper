@@ -63,7 +63,11 @@ const parseXML = (xmlString) => {
     
     // find variables in Logic
     const logicElements = Array.from(documentObject.getElementsByTagName("logic"));
-    
+    const logicMatrix = {
+      condition: [],
+      action: []
+    }
+
     logicElements.forEach((logicElement) => {
       // get executionContext from logic
       // if not available from documentObject
@@ -77,7 +81,8 @@ const parseXML = (xmlString) => {
       extractParametersFromLogicElement(
         executionContext,
         logicElement,
-        parameters
+        parameters,
+        logicMatrix
       )  
     });
   
@@ -86,7 +91,8 @@ const parseXML = (xmlString) => {
       table,
       index === 0,
       objectId,
-      localName
+      localName,
+      logicMatrix
     );
   });
 

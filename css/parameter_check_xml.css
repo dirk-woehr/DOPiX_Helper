@@ -1,7 +1,7 @@
 #table {
   border-spacing: 0;
   margin: 0 var(--padding-vert);
-  width: calc(100vw - calc(var(--padding-vert) * 2));
+  width: calc(100vw - calc(var(--padding-vert) * 4));
 }
 
 #thead {
@@ -130,5 +130,93 @@ span.incorrect::before {
   }
   &.logicSubType {
     background-color: rgba(var(--color-base), 0.5);
+  }
+}
+/* 
+tr.matrixRow {
+  height: auto;
+  transition: height 0.616s ease;
+  overflow-y: hidden;
+  interpolate-size: allow-keywords;
+  &.hide {
+    height: 2px;
+    display: block;
+  }
+}
+ */
+.matrixHead {
+  background-color: rgb(60, 80, 89);
+  padding: var(--gap);
+  cursor: pointer;
+}
+
+.matrixGridContainer {
+  display: flex;
+  justify-content: end;
+  padding-right: 4rem;
+}
+
+.matrixGrid {
+  display: inline-grid;
+  gap: 0.5rem;
+  
+  height: auto;
+  transition: height 0.616s ease;
+  overflow-y: hidden;
+  interpolate-size: allow-keywords;
+  padding-top: 2px;
+  &.hide {
+    height: 2px;
+  }
+
+  .marker {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    height: 2rem;
+    &.execute {
+      background-color: rgb(197, 148, 23);
+    }
+    &.true {
+      background-color: green;
+    }
+    &.false {
+      background-color: darkcyan;
+    }
+    &.unused {
+      background-color: rgb(11, 102, 155);
+    }
+  }
+  .logic {
+    min-height: 2rem;
+    padding: 6px;
+    margin: 0;
+    background-color: rgb(60, 80, 89);
+  }
+}
+
+#pageNav {
+  position:sticky;
+  top: 0;
+  background-color: rgb(var(--background-color-rgb));
+  padding: var(--padding-horz) var(--padding-horz);
+  box-shadow: 5px 5px 5px var(--background-color);
+  ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    gap: var(--padding-horz);
+    padding-left: 0;
+    margin: 0;
+    li {
+      a {
+        color: rgb(var(--text-color));
+        text-decoration: none;
+        background-color: var(--nav-item-background-color);
+        display:inline-block;
+        padding: var(--padding-vert) var(--padding-horz);
+        border-radius: var(--gap);
+      }
+    }
   }
 }

@@ -14,6 +14,13 @@ const typeNames = {
   }
 }
 
+const cellColors = {
+  "J": "true",
+  "N": "false",
+  "X": "execute",
+  "-": "unused",
+}
+
 const sortExecutionContextKeys = (keys) => {
   const onDocumentPreparation = [];
   const onComponentSelection = [];
@@ -91,7 +98,8 @@ const extractParametersFromText = (textcontent, parameters) => {
 const extractParametersFromLogicElement = (
   executionContext,
   logicElement,
-  parameters
+  parameters,
+  logicMatrix
 ) => {
   const logicTypes = ["basiclogic", "extendedlogic"];
   logicTypes.forEach((logicTypeString) => {
@@ -99,6 +107,7 @@ const extractParametersFromLogicElement = (
     const logicType = logicElement.getElementsByTagName(logicTypeString)[0];
 
     if(logicType !== undefined) {
+
       const logicSubTypes = ["condition", "action"];
       logicSubTypes.forEach((logicSubTypeString) => {
         const logicSubTypeElements = Array.from(
@@ -110,8 +119,12 @@ const extractParametersFromLogicElement = (
             collectParametersFromLogic(
               [executionContext, logicTypeString, logicSubTypeString, index],
               logicString,
-              parameters
+              parameters,
             );
+            if(logicTypeString === "extendedlogic") {
+              const logicMapping = logicSubTypeElement.getAttribute("mapping").split("");
+              logicMatrix[logicSubTypeString].push([logicString, ...logicMapping]);
+            }
           };
         });
       });
@@ -119,7 +132,7 @@ const extractParametersFromLogicElement = (
   });
 }
 
-/**
+/*
  * Collects variables from logic string
  * adds them to parameters collection
  * and marks them as used, if already collected
@@ -131,7 +144,7 @@ const extractParametersFromLogicElement = (
 const collectParametersFromLogic = (
   logicPathKeys,
   logicString,
-  parameters
+  parameters,
 ) => {
   
   const [executionContext, logicTypeString, logicSubTypeString, index] = logicPathKeys;
@@ -194,7 +207,13 @@ const translateTypeID = (type, typeID) => {
  * @param { string } objectId - ID of DOPiX object
  * @param { string } objectType - Type of DOPiX object
 */
-const createResultTable = (parameters, table, clearTable, objectId, objectType) => {
+const createResultTable = (
+  parameters, table,
+  clearTable,
+  objectId,
+  objectType,
+  logicMatrix
+) => {
   if(clearTable) {
     table.innerHTML = "";
   }
@@ -365,12 +384,80 @@ const createResultTable = (parameters, table, clearTable, objectId, objectType) 
     table.appendChild(tr);
   });
 
+  // create logic matrix, if available
+  const {condition: cons, action: acts} = logicMatrix;
+  if(cons.length + acts.length > 0) {
+    const columnCount = cons[0].length;    
+    console.log({logicMatrix, cons, acts});
+
+    // create matrix head
+    const trMatrixHead = document.createElement("tr");
+    const thMatrixHead = document.createElement("th");
+    thMatrixHead.setAttribute("colspan", colspan);
+    thMatrixHead.innerHTML = "Erweiterte Logik: Matrix";
+    thMatrixHead.classList.add("matrixHead");
+
+    thMatrixHead.addEventListener("click", (el) => {
+      console.log({el, parent: el.target.parentElement});
+      el.target.parentElement.nextSibling.querySelector(".matrixGrid").classList.toggle("hide");
+    });
+
+    trMatrixHead.appendChild(thMatrixHead);
+    table.appendChild(trMatrixHead);
+
+    // create matrix cell
+    const trMatrix =document.createElement("tr");
+    trMatrix.classList.add("matrixRow");
+    const tdMatrix = document.createElement("td");
+    tdMatrix.setAttribute("colspan", colspan);
+
+    // create matrix grid
+    const matrixGridContainer = document.createElement("div");
+    matrixGridContainer.classList.add("matrixGridContainer");
+
+    const matrixGrid = document.createElement("div");
+    matrixGrid.classList.add("matrixGrid", "hide");
+    const gridRowWidths = ["auto"];
+    gridRowWidths.push(...Array(columnCount-1).fill("2rem"));
+    console.log({gridRowWidths, columnCount});
+    matrixGrid.setAttribute("style", `grid-template-columns: ${gridRowWidths.join(" ")};`);
+    console.log({gridRowWidths, style: matrixGrid.getAttribute("style")});
+    
+    const createGridRow = (text, index) => {
+      const elementType = index === 0 ? "pre" : "div";
+      const cellClass = cellColors[text] ? cellColors[text] : "logic";
+      const gridElement = document.createElement(elementType);
+      gridElement.classList.add(cellClass);
+      if(cellClass !== "logic") gridElement.classList.add("marker");
+      gridElement.textContent = text;
+      matrixGrid.appendChild(gridElement);
+    }
+
+    cons.forEach(condition => {
+      condition.forEach((cell, index) => {
+        createGridRow(cell, index);
+      });      
+    });
+    
+    acts.forEach(action => {
+      action.forEach((cell, index) => {
+        createGridRow(cell, index);
+      });
+    });
+
+    matrixGridContainer.appendChild(matrixGrid);
+    tdMatrix.appendChild(matrixGridContainer);
+    trMatrix.appendChild(tdMatrix)
+
+    table.appendChild(trMatrix);
+  }
 }
 
 const createObjectRows = (table) => {
   const trObjectUsage = document.createElement("tr");
   const thObjectId = document.createElement("th");
   thObjectId.innerHTML = "Verwendete Objekte";
+  addAnchor(thObjectId, "usedObjects", {top: "-96px"});
   thObjectId.setAttribute("colspan", colspan);
   thObjectId.classList.add("columnHeadMain");
   trObjectUsage.appendChild(thObjectId);
@@ -433,13 +520,13 @@ const createObjectRows = (table) => {
 
     table.appendChild(trObj);
   });
-
 }
 
 const createVariableRows = (table, variables) => {
   const trVarObjects = document.createElement("tr");
   const thVarObjects = document.createElement("th");
   thVarObjects.innerHTML = "Variablen im Prozess";
+  addAnchor(thVarObjects, "variables", {top: "-96px"});
   thVarObjects.setAttribute("colspan", colspan);
   thVarObjects.classList.add("columnHeadMain");
   trVarObjects.appendChild(thVarObjects);
@@ -457,6 +544,11 @@ const createVariableRows = (table, variables) => {
   thUsed.classList.add("columnHead");
   headRow.appendChild(thUsed);
   
+  const thHidden = document.createElement("th");
+  thHidden.innerHTML = "Ist unsichtbar";
+  thHidden.classList.add("columnHead");
+  headRow.appendChild(thHidden);
+  
   const thBlank = document.createElement("th");
   thBlank.setAttribute("colspan", colspan-2);
   thBlank.classList.add("columnHead");
@@ -468,6 +560,7 @@ const createVariableRows = (table, variables) => {
 
   variables.forEach((variable) => {
     const variableName = variable.getAttribute("id");
+    const entrymode = variable.getAttribute("entrymode");
     const isUsed = setParameters.has(variableName);
 
     const trVar = document.createElement("tr");
@@ -476,7 +569,8 @@ const createVariableRows = (table, variables) => {
     }
     isEven = !isEven;
 
-    const cssClass = isUsed ? "correct" : "incorrect";
+    const isHidden = entrymode === "hidden";
+    const cssClass = isHidden && isUsed ? "correct" : "incorrect";
 
     const tdVar = document.createElement("td");
     const spanVar = document.createElement("span");
@@ -491,8 +585,13 @@ const createVariableRows = (table, variables) => {
     trVar.appendChild(tdUsed);
 
     // create param cell
+    const tdEntrymode = document.createElement("td");
+    tdEntrymode.innerHTML = isHidden ? "☑" : "☐";
+    trVar.appendChild(tdEntrymode);
+
+    // create param cell
     const tdBlank = document.createElement("td");
-    tdBlank.setAttribute("colspan", colspan-2);
+    tdBlank.setAttribute("colspan", colspan-3);
     trVar.appendChild(tdBlank);
 
     table.appendChild(trVar);

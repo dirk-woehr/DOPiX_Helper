@@ -1,8 +1,8 @@
 :root {
   /* paddings gaps and margins */
   --gap: 6px;
-  --padding-vert: calc(var(--gap) * 2);
-  --padding-horz: var(--gap);
+  --padding-horz: calc(var(--gap) * 2);
+  --padding-vert: var(--gap);
 
   /* colors */
   --text-color: white;
@@ -55,6 +55,7 @@ html {
   min-height: 100svh;
   background-color: var(--background-color);
   color: var(--text-color);
+  scroll-behavior: smooth;
 }
 
 body {
@@ -151,11 +152,17 @@ input {
   width: min(90vw, 640px);
   display: flex;
   flex-direction: column;
-  gap: var(--padding-vert);
-  padding-left: var(--padding-vert);
-  margin-bottom: 12px;
+  gap: var(--padding-horz);
+  padding-left: var(--padding-horz);
+  margin: 12px 0;
 }
 
 .mainContainer {
-  padding-left: var(--padding-vert);
+  padding-left: var(--padding-horz);
+}
+
+.anchor {
+  height: 0;
+  width: 0;
+  position: relative;
 }
