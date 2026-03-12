@@ -33,6 +33,7 @@
 * Betreffzeile 2 (Z_ZZ_ZZ_EXT_Z9001_IND_BETREFF_2) ist eine Variable im RUF-Objekt  und kann dort im Standardwert überschrieben werden
 * Zusätzlich kann sie auch in der Logik der DVL überschrieben werden, wenn dort andere Werte aus Variablen rein sollen, müssen diese manuell zugewiesen werden, da das Default-Mapping erst danach stattfindet. 
 * Betreffzeile 1 ist fix, aber die Variable Z_ZZ_ZZ_EXT_Z0002_VERTRNR kann überschrieben werden (auch in DVL)
+* DVL muss logisch bleiben, auch wenn keine Variable in der logik überschrieben wird, sonst wird Logik für kompletten Brief deaktiviert.
 
 ## Generell
 * Brief ausführen über "abbrechen" beenden, über (X) wird DOPiX beendet

@@ -46,9 +46,9 @@ const addVarContainer = () => {
   formContainer.appendChild(varInstance);
 }
 
-const openXML = (xmlString, xpathExpression, xpathValue) => {
+const openXML = (documentString, xpathExpression, xpathValue) => {
   const parser = new DOMParser();
-  const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+  const xmlDoc = parser.parseFromString(documentString, "text/xml");
 
   const xpathResult = xmlDoc.evaluate(
     xpathExpression,
@@ -83,8 +83,8 @@ document.addEventListener("DOMContentLoaded", function () {
   
       if (variablePath && variablePath.length > 0) {
         const xpathExpression = buildPath(variablePath, xpathExpressionOutput);
-        if (xmlString && xmlString.length > 1) {
-          openXML(xmlString, xpathExpression, xpathValue)
+        if (documentString && documentString.length > 1) {
+          openXML(documentString, xpathExpression, xpathValue)
         } else {
           xpathExpressionOutput.classList.add("error");
           xpathExpressionOutput.innerHTML = "Filename fehlt"

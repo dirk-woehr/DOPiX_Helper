@@ -4,11 +4,11 @@ let variables = undefined;
 
 const colspan = 4;
 
-const parseXML = (xmlString) => {
+const parseXML = (documentString) => {
   const table = document.getElementById("table");
   
   const parser = new DOMParser();
-  const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+  const xmlDoc = parser.parseFromString(documentString, "text/xml");
   
   const paragraphs = Array.from(xmlDoc.getElementsByTagName("paragraph"));
   const stencils = Array.from(xmlDoc.getElementsByTagName("stencil"));
@@ -114,6 +114,6 @@ document.addEventListener("DOMContentLoaded", function() {
   activateFileDialog(btnCheck, fileInput);  
   
   btnCheck.addEventListener("click", () => {
-    parseXML(xmlString);
+    parseXML(documentString);
   });
 });

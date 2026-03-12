@@ -10,8 +10,8 @@
 * Umbenennen über Kontextmenü möglich, aber nur bei neuen Bausteinen, die noch nicht verwendet werden.
 
 ## Vorauswahl
-* Muss wenn ohne Logik
-* Kann bei Logik
+* Muss, wenn ohne Logik
+* Kann, bei Logik
 
 ## Änderbarkeit Bausteine per Default:
 * Baustein nicht änderbar
@@ -21,3 +21,6 @@
 * Name aus Spezifikation
 * Beschreibung aus Spezifikation
 * Freigabename
+
+## Geänderte Absatzeigenschaften zurückseten
+Formatierungen am Ende des Bausteins resetten
