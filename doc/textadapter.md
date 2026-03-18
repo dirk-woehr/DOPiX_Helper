@@ -18,3 +18,5 @@ https://extranet.sdk.de/wikip/spaces/TSIPKI/pages/799713040/Datenmapping+Logikve
 * vordefinierte variablen an zentraler stelle oder nach beim code?
 
 * Schleifen teilen oder lieber mehrfach durchlaufen?
+
+Neues Modul

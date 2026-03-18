@@ -110,6 +110,7 @@ span.incorrect::before {
   margin: 0;
   white-space: pre-wrap;
 }
+
 .tag {
   --color-base: 255, 140, 0;
   &.onComponentSelection {
@@ -118,8 +119,14 @@ span.incorrect::before {
   &.onComponentDeSelection {
     --color-base: 14, 151, 133;
   }
+  &.tfoRef {
+    display: inline-block;
+    background-color: rgb(105, 74, 179);
+    padding: var(--padding-vert) var(--padding-horz);
+    margin-right: var(--gap);
+  }
 
-  padding: var(--padding-horz) var(--padding-vert);
+  padding: var(--padding-vert) var(--padding-horz);
   border-radius: 4px;
   text-align: center;
   &.executionContext {
@@ -132,18 +139,12 @@ span.incorrect::before {
     background-color: rgba(var(--color-base), 0.5);
   }
 }
-/* 
-tr.matrixRow {
-  height: auto;
-  transition: height 0.616s ease;
-  overflow-y: hidden;
-  interpolate-size: allow-keywords;
-  &.hide {
-    height: 2px;
-    display: block;
-  }
+
+th.tfoRefContainer {
+  text-align: left;
+  padding: var(--padding-vert);
 }
- */
+
 .matrixHead {
   background-color: rgb(60, 80, 89);
   padding: var(--gap);
@@ -209,14 +210,23 @@ tr.matrixRow {
     padding-left: 0;
     margin: 0;
     li {
-      a {
+      a, select {
         color: rgb(var(--text-color));
         text-decoration: none;
         background-color: var(--nav-item-background-color);
         display:inline-block;
         padding: var(--padding-vert) var(--padding-horz);
         border-radius: var(--gap);
+        border-width: 0;
+        font-size: 16px;
       }
+      select {
+        padding: calc(var(--padding-vert) + 2px) var(--padding-horz);
+        padding-top: calc(var(--padding-vert) + 1px);
+      }
+    }
+    li:has(>select:empty) {
+      display: none;
     }
   }
 }

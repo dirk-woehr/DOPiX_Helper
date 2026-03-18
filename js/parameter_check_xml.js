@@ -6,6 +6,22 @@ const colspan = 4;
 
 const parseXML = (documentString) => {
   const table = document.getElementById("table");
+  // clear select
+  const objectSelect = document.getElementById("objectSelect");
+  objectSelect.innerHTML = "";
+  // add base select
+  const baseOption = document.createElement("option");
+  baseOption.innerHTML = "Objekt wählen...";
+  baseOption.setAttribute("value", "header");
+  objectSelect.appendChild(baseOption);
+  // add event listener
+  objectSelect.addEventListener("change", (select) => {
+    const targetId = select.target.value;
+    console.log({targetId});
+    const url = location.href;
+    location.href = "#" + targetId;
+    history.replaceState(null,null,url);
+  })
   
   const parser = new DOMParser();
   const xmlDoc = parser.parseFromString(documentString, "text/xml");
@@ -25,6 +41,7 @@ const parseXML = (documentString) => {
           isUsed: true,
           isInProcess: false,
           references: new Set().add(stencilId),
+          tfoReferences: {},
         }
       } else {
         objects[entryId].references.add(stencilId)
@@ -45,6 +62,7 @@ const parseXML = (documentString) => {
         isUsed: false,
         isInProcess: true,
         references: new Set(),
+        tfoReferences: {},
       }
     }
 
@@ -72,12 +90,17 @@ const parseXML = (documentString) => {
       // get executionContext from logic
       // if not available from documentObject
       const executionContext = logicElement
-        .getElementsByTagName("executionContext")[0]
-        ?.getAttribute("pointInTime") 
-        ?? documentObject
-        .getElementsByTagName("executionContext")[0]
-        ?.getAttribute("pointInTime");
+      .getElementsByTagName("executionContext")[0]
+      ?.getAttribute("pointInTime") 
+      ?? documentObject
+      .getElementsByTagName("executionContext")[0]
+      ?.getAttribute("pointInTime");
       
+      const tfoReference = logicElement.getAttribute("tforeference")
+      if(tfoReference) {
+        objects[objectId].tfoReferences[executionContext] = tfoReference;
+      }
+
       extractParametersFromLogicElement(
         executionContext,
         logicElement,
@@ -86,6 +109,12 @@ const parseXML = (documentString) => {
       )  
     });
   
+    // add option for current object
+    const objectOption = document.createElement("option");
+    objectOption.innerHTML = objectId;
+    objectOption.setAttribute("value", objectId);
+    objectSelect.appendChild(objectOption);
+
     createResultTable(
       parameters,
       table,

@@ -114,20 +114,21 @@ button {
 
 input[type=file] {
   font-size: 18px;
+  width: fit-content;
   &::file-selector-button {
-  border: none;
-  background-color: var(--file-input-background-color);
-  font-size: 18px;
-  font-weight: 800;
-  color: white;
-  padding: 12px 36px;
-  text-decoration: none;
-  border-radius: 6px;
-  display: inline-block;
-  &:hover {
-    background-color: var(--file-input-background-hover);
+    border: none;
+    background-color: var(--file-input-background-color);
+    font-size: 18px;
+    font-weight: 800;
+    color: white;
+    padding: 12px 36px;
+    text-decoration: none;
+    border-radius: 6px;
+    display: inline-block;
+    &:hover {
+      background-color: var(--file-input-background-hover);
+    }
   }
-}
 }
 
 input[type="text"] {

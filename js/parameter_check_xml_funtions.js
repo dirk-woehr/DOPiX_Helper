@@ -218,10 +218,11 @@ const createResultTable = (
     table.innerHTML = "";
   }
 
-  // create table head for object
+  // create table head for objects
   const trObjectId = document.createElement("tr");
   const thObjectId = document.createElement("th");
   thObjectId.innerHTML = objectId;
+  addAnchor(thObjectId, objectId, {top: "-96px"});
   thObjectId.setAttribute("colspan", colspan);
   thObjectId.classList.add("columnHeadMain");
   trObjectId.appendChild(thObjectId);
@@ -231,7 +232,33 @@ const createResultTable = (
   const parameterNames = Object.keys(parameters);
   
   // create column heads
-  if(parameterNames.length > 0) {    
+  if(parameterNames.length > 0) {
+    const tfoRefs = Object.keys(objects[objectId].tfoReferences);
+    tfoRefs.forEach((tfoRef, index) => {
+      const trTfoRef = document.createElement("tr");
+      const thTfoRefBlank = document.createElement("th");
+      if(index === 0) {
+        thTfoRefBlank.setAttribute("colspan", colspan - 2);
+        trTfoRef.appendChild(thTfoRefBlank);
+
+        const thTfoRefHead = document.createElement("th");
+        thTfoRefHead.innerHTML = "TFO-Bezüge:"
+        trTfoRef.appendChild(thTfoRefHead);
+      } else {
+        thTfoRefBlank.setAttribute("colspan", colspan - 1);
+        trTfoRef.appendChild(thTfoRefBlank);
+      }
+      const thTfoRefContent = document.createElement("th");
+      thTfoRefContent.classList.add("tfoRefContainer");
+      appendTag(
+        translateTypeID("executionContext", tfoRef),
+        thTfoRefContent,
+        ["tfoRef"]
+      );
+      thTfoRefContent.innerHTML += objects[objectId].tfoReferences[tfoRef]
+      trTfoRef.appendChild(thTfoRefContent);
+      table.appendChild(trTfoRef);
+    });
     const headRow = document.createElement("tr");
     const thVar = document.createElement("th");
     thVar.innerHTML = "Variable";
@@ -321,6 +348,7 @@ const createResultTable = (
       let logicSubTypeMain = null;
       const divLog = document.createElement("div");
       divLog.classList.add("divLog", "hide");
+
       const sortedKeys = sortExecutionContextKeys(logicKeys);
       sortedKeys.forEach((logicKey) => {
         const {logicString, logicPathKeys} = logic[logicKey];

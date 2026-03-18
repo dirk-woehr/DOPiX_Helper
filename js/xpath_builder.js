@@ -22,9 +22,11 @@ const addEventToButton = (button, type) => {
   button.addEventListener("click", () => {
     switch (type) {
       case "add":
+        console.log("add");
         addVarContainer();
         break;
-      case "remove":
+        case "remove":
+        console.log("remove");
         button.parentNode.parentNode.remove();
         break;
     }
