@@ -208,7 +208,8 @@ const translateTypeID = (type, typeID) => {
  * @param { string } objectType - Type of DOPiX object
 */
 const createResultTable = (
-  parameters, table,
+  parameters,
+  table,
   clearTable,
   objectId,
   objectType,

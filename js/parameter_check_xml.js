@@ -1,6 +1,4 @@
-let setParameters = undefined;
-let objects = undefined;
-let variables = undefined;
+let setParameters, objects, variables, txkName;
 
 const colspan = 4;
 
@@ -130,6 +128,8 @@ const parseXML = (documentString) => {
   createVariableRows(table, variables);
 
   collectReferences(xmlDoc, table);
+
+  createTreeView(xmlDoc, txkName);
 
 }
 

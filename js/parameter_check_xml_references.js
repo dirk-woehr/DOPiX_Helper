@@ -78,7 +78,10 @@ const collectReferences = (xmlDoc, table) => {
       if(objectId.search(appType.name) > -1) {
         const stencilentries = Array.from(stencil.getElementsByTagName("stencilentry"));
         const stencilentry = stencilentries.find(stentry => {
-          return stentry.getAttribute("refid").search("_TXK_") > -1;
+          const txkRef = stentry.getAttribute("refid");
+          const stencilEntryFound = stentry.getAttribute("refid").search("_TXK_") > -1;
+          if(stencilEntryFound) txkName = txkRef;
+          return stencilEntryFound;
         });
         
         const target = stencilentry ? stencilentry.getAttribute("refid") : "Report ID Missing in: " + objectId
