@@ -15,7 +15,6 @@ const parseXML = (documentString) => {
   // add event listener
   objectSelect.addEventListener("change", (select) => {
     const targetId = select.target.value;
-    console.log({targetId});
     const url = location.href;
     location.href = "#" + targetId;
     history.replaceState(null,null,url);

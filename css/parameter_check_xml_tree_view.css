@@ -47,7 +47,7 @@
 .tree-label.has-children::before {
   content: "▶";
   display: inline-block;
-  margin-right: 6px;
+  margin-right: 11px;
   font-size: 10px;
   transition: transform 0.2s ease;
 }
@@ -60,4 +60,27 @@
 /* Eingeklappt */
 .collapsed {
   display: none;
+}
+
+#treeContainer {
+  position: sticky;
+  max-height: 50vh;
+  bottom: 0;
+  #tree {
+    padding: calc(var(--gap) * 2);
+    background-color: var(--background-color);
+    display: inline-block;
+    border: 1px solid rgba(var(--text-color-rgb), 0.7);
+    border-radius: calc(var(--gap) * 2);
+    margin-bottom: var(--gap);
+    margin-left: var(--gap);
+    box-shadow: 5px 5px 5px var(--background-color);
+    a {
+      color: var(--text-color);
+      text-decoration: none;
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
 }

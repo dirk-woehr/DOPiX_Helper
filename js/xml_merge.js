@@ -1,28 +1,30 @@
-const mergeXML = () => {
+const mergeXML = () => {4
+  // parse XML documents
   const parser = new DOMParser();
-
   const xmlSource = parser.parseFromString(window.xmlSource, "text/xml");
   const xmlTarget = parser.parseFromString(window.xmlTarget, "text/xml");
   
+ // collect tfos from source, exclude CONTROL tfo
   const tfos = Array.from(xmlSource.getElementsByTagName("tfo")).filter(tfo => {
     return tfo.getAttribute("n") !== "CONTROL";
   });
 
+  // append tfos from source to target
   const textApp = xmlTarget.getElementsByTagName("textApp")[0];
   tfos.forEach(tfo => {
     textApp.appendChild(tfo);
   });
 
+  // serialize new XML to string
   const xmlSerializer = new XMLSerializer();
   window.serializedJSON = xmlSerializer.serializeToString(xmlTarget);
 
+  // activate copy button
   btnCopyString.disabled = false;
-
-  console.log({tfos, xmlTarget});
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  console.log("yes, ready")
+  // colelct elements
   const fileInputSource = document.getElementById("fileInputSource");
   const fileInputTarget = document.getElementById("fileInputTarget");
   const btnCheck = document.getElementById("btnCheck");
@@ -35,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
     mergeXML(btnCopyString);
   });
 
+  // prettify & copy serialized XML string
   btnCopyString.addEventListener("click", () => {
     navigator.clipboard.writeText( prettyPrintXml(window.serializedJSON));
   });

@@ -17,7 +17,6 @@ const buildtreeNode = (stencils, nodeName) => {
     const stencilentries = Array.from(stencil.getElementsByTagName("stencilentry"));
     stencilentries.forEach(entry => {
       const entryId = entry.getAttribute("refid");
-      console.log({entry, entryId})
       treeNode.children.push(buildtreeNode(stencils, entryId));
     }) 
   }
@@ -28,7 +27,6 @@ const buildtreeNode = (stencils, nodeName) => {
 const createTreeView = (xmlDoc) => {
   const stencils = Array.from(xmlDoc.getElementsByTagName("stencil"));
   let stencilTree = buildtreeNode(stencils, txkName);
-  console.log({stencilTree});
 
   const container = document.getElementById("tree");
   renderTreeToContainer(stencilTree, container);
@@ -67,8 +65,6 @@ function renderTreeToContainer(tree, container) {
   container.appendChild(rootUl);
 }
 
-
-
 /**
  * Rendert einen Baumknoten rekursiv
  */
@@ -77,10 +73,13 @@ function renderTree(node) {
 
   // Label
   const span = document.createElement("span");
-  span.textContent = node.name;
   span.classList.add("tree-label");
+  const linkToElement = document.createElement("a");
+  linkToElement.setAttribute("href", "#" + node.name)
+  linkToElement.textContent = node.name;
 
   li.appendChild(span);
+  li.appendChild(linkToElement);
 
   if (node.children && node.children.length > 0) {
     const ul = document.createElement("ul");
