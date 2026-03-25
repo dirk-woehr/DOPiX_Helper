@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   btnBuild.disabled = true;
 
-  activateFileDialog(btnBuild, fileInput);
+  activateFileDialog(btnBuild, fileInput, "documentString");
   
   btnBuild.addEventListener("click", () => {    
     const varContainers = Array.from(document.getElementsByClassName("varContainer"));
@@ -85,8 +85,8 @@ document.addEventListener("DOMContentLoaded", function () {
   
       if (variablePath && variablePath.length > 0) {
         const xpathExpression = buildPath(variablePath, xpathExpressionOutput);
-        if (documentString && documentString.length > 1) {
-          openXML(documentString, xpathExpression, xpathValue)
+        if (window.documentString && window.documentString.length > 1) {
+          openXML(window.documentString, xpathExpression, xpathValue)
         } else {
           xpathExpressionOutput.classList.add("error");
           xpathExpressionOutput.innerHTML = "Filename fehlt"

@@ -140,9 +140,9 @@ document.addEventListener("DOMContentLoaded", function() {
   const btnCheck = document.getElementById('btnCheck');
   const fileInput = document.getElementById("fileInput");
 
-  activateFileDialog(btnCheck, fileInput);  
+  activateFileDialog(btnCheck, fileInput, "documentString");  
   
   btnCheck.addEventListener("click", () => {
-    parseXML(documentString);
+    parseXML(window.documentString);
   });
 });

@@ -1,0 +1,63 @@
+.tree-root,
+.tree-root ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 20px;
+  position: relative;
+}
+
+/* Vertikale Linie */
+.tree-root ul::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 8px;
+  border-left: 1px solid #ccc;
+  height: 100%;
+}
+
+/* Jeder Knoten */
+.tree-root li {
+  position: relative;
+  margin: 4px 0;
+}
+
+/* Horizontale Linie */
+.tree-root li::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: -12px;
+  width: 12px;
+  border-top: 1px solid #ccc;
+}
+
+/* Label */
+.tree-label {
+  cursor: default;
+  padding-left: 4px;
+}
+
+/* Klickbare Nodes */
+.tree-label.has-children {
+  cursor: pointer;
+}
+
+/* Pfeil vor Nodes */
+.tree-label.has-children::before {
+  content: "▶";
+  display: inline-block;
+  margin-right: 6px;
+  font-size: 10px;
+  transition: transform 0.2s ease;
+}
+
+/* Gedrehter Pfeil wenn offen */
+.tree-label.expanded::before {
+  transform: rotate(90deg);
+}
+
+/* Eingeklappt */
+.collapsed {
+  display: none;
+}

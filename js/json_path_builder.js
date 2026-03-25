@@ -71,12 +71,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   btnBuild.disabled = true;
 
-  activateFileDialog(btnBuild, fileInput);
+  activateFileDialog(btnBuild, fileInput, "documentString");
   
   btnBuild.addEventListener("click", () => {    
     const varContainers = Array.from(document.getElementsByClassName("varContainer"));
     
-    const jsonObject = openJSON(documentString)
+    const jsonObject = openJSON(window.documentString)
     if(!jsonObject) return;
     
     varContainers.forEach((varContainer) => {

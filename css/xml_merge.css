@@ -1,0 +1,13 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--gap) * 2);
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.mainContainer button:first-of-type {
+  margin-top: 1.5rem;
+}
