@@ -26,7 +26,7 @@ const activateFileDialog = (button, fileInput, stringKey) => {
   });
 
   if(fileInput.files.length > 0) {
-    readFile(fileInput.files[0], btnCheck, stringKey);
+    readFile(fileInput.files[0], button, stringKey);
   } else {
     button.disabled = true;
   }
@@ -55,6 +55,11 @@ const addAnchor = (parent, id, offset) => {
   }
 }
 
+/**
+ * Pretty print XML-String
+ * @param { string } xml - XML-string to format
+ * @param { number } indentSize - number of spaces to indent
+ */
 function prettyPrintXml(xml, indentSize = 2) {
   const indentChar = ' '.repeat(indentSize);
   let formatted = '';

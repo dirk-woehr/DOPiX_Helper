@@ -5,9 +5,10 @@ const mergeXML = () => {4
   const xmlTarget = parser.parseFromString(window.xmlTarget, "text/xml");
   
  // collect tfos from source, exclude CONTROL tfo
-  const tfos = Array.from(xmlSource.getElementsByTagName("tfo")).filter(tfo => {
-    return tfo.getAttribute("n") !== "CONTROL";
-  });
+  const textAppSource = xmlSource.getElementsByTagName("textApp")[0];
+  const tfos = Array.from(textAppSource.children).filter(tfo => {
+    return tfo.tagName === "tfo" && tfo.getAttribute("n") !== "CONTROL";
+  });  
 
   // append tfos from source to target
   const textApp = xmlTarget.getElementsByTagName("textApp")[0];
@@ -39,6 +40,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // prettify & copy serialized XML string
   btnCopyString.addEventListener("click", () => {
-    navigator.clipboard.writeText( prettyPrintXml(window.serializedJSON));
+    navigator.clipboard.writeText(prettyPrintXml(window.serializedJSON, 2));
   });
 });
