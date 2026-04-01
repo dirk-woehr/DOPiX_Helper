@@ -40,6 +40,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // prettify & copy serialized XML string
   btnCopyString.addEventListener("click", () => {
-    navigator.clipboard.writeText(prettyPrintXml(window.serializedJSON, 2));
+    // create blob from XML string
+    const blob = new Blob([prettyPrintXml(window.serializedJSON, 2)], {type: "text/xml"});
+    console.log({blob})
+    // create temporary download-link
+    const temporaryDownloadLink = document.createElement('a');
+    temporaryDownloadLink.href = URL.createObjectURL(blob);
+    console.log("blob set")
+    temporaryDownloadLink.setAttribute('download', "merged.xml");
+    console.log("'download' attribute set")
+    temporaryDownloadLink.style.display = 'none';
+    document.body.appendChild(temporaryDownloadLink);
+    // press and remove link
+    temporaryDownloadLink.click();
+    document.body.removeChild(temporaryDownloadLink);
   });
 });

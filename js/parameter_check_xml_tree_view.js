@@ -29,6 +29,7 @@ const createTreeView = (xmlDoc) => {
   let stencilTree = buildtreeNode(stencils, txkName);
 
   const container = document.getElementById("tree");
+  container.innerHTML = "";
   renderTreeToContainer(stencilTree, container);
 }
 

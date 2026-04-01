@@ -75,6 +75,9 @@
     margin-bottom: var(--gap);
     margin-left: var(--gap);
     box-shadow: 5px 5px 5px var(--background-color);
+    &:empty {
+      display: none;
+    }
     a {
       color: var(--text-color);
       text-decoration: none;

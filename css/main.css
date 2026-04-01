@@ -25,7 +25,7 @@
   /* nav items */
   --nav-item-background-color-rgb: 0, 128, 132;
   --nav-item-background-color: rgb(var(--nav-item-background-color-rgb));
-  --nav-item-background-color-hover: rgba(var(--nav-item-background-color-rgb), 0.5);
+  --nav-item-background-color-hover: rgba(var(--nav-item-background-color-rgb), 0.6);
   --nav-item-text-color: white;
   --nav-width: min(90vw, 320px);
 
@@ -36,11 +36,15 @@
   /* buttons */
   --button-background-color-rgb: 166, 22, 128;
   --button-background-color: rgb( var(--button-background-color-rgb));
-  --button-background-hover: rgba( var(--button-background-color-rgb), 0.5);
+  --button-background-hover: rgba( var(--button-background-color-rgb), 0.6);
  
   --file-input-background-color-rgb: 0, 102, 179;
   --file-input-background-color: rgb( var(--file-input-background-color-rgb));
-  --file-input-background-hover: rgba( var(--file-input-background-color-rgb), 0.5);
+  --file-input-background-hover: rgba( var(--file-input-background-color-rgb), 0.6);
+
+  --button-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+  --button-shadow-active: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+  --button-transform: scale(0.98);
 }
 
 * {
@@ -86,8 +90,13 @@ ul#nav {
       text-decoration: none;
       border-radius: 6px;
       display: block;
+      box-shadow: var(--button-shadow);
       &:hover {
         background-color: var(--nav-item-background-color-hover);
+      }
+      &:active {
+        box-shadow: var(--button-shadow-active);
+        transform: var(--button-transform);
       }
     }
   }
@@ -105,8 +114,13 @@ button {
   border-radius: 6px;
   display: inline-block;
   width: min(90vw, 640px);
+  box-shadow: var(--button-shadow);
   &:hover {
     background-color: var(--button-background-hover);
+  }
+  &:active {
+    box-shadow: var(--button-shadow-active);
+    transform: var(--button-transform);
   }
   &:disabled {
     opacity: 0.3;
@@ -126,8 +140,13 @@ input[type=file] {
     text-decoration: none;
     border-radius: 6px;
     display: inline-block;
+    box-shadow: var(--button-shadow);
     &:hover {
       background-color: var(--file-input-background-hover);
+    }
+    &:active {
+      box-shadow: var(--button-shadow-active);
+      transform: var(--button-transform);
     }
   }
 }
