@@ -28,7 +28,7 @@ function Get-Tree($path) {
     }
 }
 
-$tree = Get-Tree "C:\Users\Dwoehr\Documents\SDK\spezifikationen\xml_test\sdk-REGEX_TEMPLATE-1775036522851871970"
+$tree = Get-Tree "C:\Users\TestUser\TestFolder"
 
 $tree | ConvertTo-Json -Depth 20 | Out-File "tree_with_content.json" -Encoding UTF8
 

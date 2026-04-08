@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="stylesheet" href="/css/xml_merge.css">
+  <link rel="stylesheet" href="/css/dopix_d7_compare.css">
   <script src="/js/global_functions.js"></script>
-  <script src="/js/xml_merge.js"></script>
-  <title>⭷ DOPiX XML-Merger</title>
+  <script src="/js/dopix_d7_compare.js"></script>
+  <title>⇄ DOPiX-/D7-Abgleich</title>
   <!-- font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +15,7 @@
 
 </head>
 <body>
-  <h1>⭷ DOPiX-/D7-Abgleich</h1>
+  <h1>⇄ DOPiX-/D7-Abgleich</h1>
   <ul id="nav">
     <li>
       <a href="/index.html">🏠 Home</a>
@@ -30,7 +30,14 @@
       <label for="fileInputDOPiX">DOPiX-Export wählen</label>
       <input type="file" id="fileInputDOPiX" />
     </div>
-    <button id="btnCompare" disabled>Vergleichen</button>
+    <button id="btnCompare">Vergleichen</button>
+    <table id="d7table">
+    </table>
   </div>
+  <dialog id="errorDialog">
+    <h2></h2>
+    <p></p>
+    <button id="btnCloseError">Schließen</button>
+  </dialog>
 </body>
 </html>

@@ -416,8 +416,7 @@ const createResultTable = (
   // create logic matrix, if available
   const {condition: cons, action: acts} = logicMatrix;
   if(cons.length + acts.length > 0) {
-    const columnCount = cons[0].length;    
-    console.log({logicMatrix, cons, acts});
+    const columnCount = cons[0].length;
 
     // create matrix head
     const trMatrixHead = document.createElement("tr");
@@ -427,7 +426,6 @@ const createResultTable = (
     thMatrixHead.classList.add("matrixHead");
 
     thMatrixHead.addEventListener("click", (el) => {
-      console.log({el, parent: el.target.parentElement});
       el.target.parentElement.nextSibling.querySelector(".matrixGrid").classList.toggle("hide");
     });
 
@@ -448,9 +446,7 @@ const createResultTable = (
     matrixGrid.classList.add("matrixGrid", "hide");
     const gridRowWidths = ["auto"];
     gridRowWidths.push(...Array(columnCount-1).fill("2rem"));
-    console.log({gridRowWidths, columnCount});
     matrixGrid.setAttribute("style", `grid-template-columns: ${gridRowWidths.join(" ")};`);
-    console.log({gridRowWidths, style: matrixGrid.getAttribute("style")});
     
     const createGridRow = (text, index) => {
       const elementType = index === 0 ? "pre" : "div";

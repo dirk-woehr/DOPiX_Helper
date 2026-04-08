@@ -5,17 +5,17 @@
   --padding-vert: var(--gap);
 
   /* colors */
-  --text-color-rgb: 255, 255, 255;
+  --text-color-rgb: 255 255 255;
   --text-color: rgb(var(--text-color-rgb));
-  --background-color-rgb: 0, 54, 67;
+  --background-color-rgb: 0 54 67;
   --background-color: rgb(var(--background-color-rgb));
 
   /* tables */
-  --table-head-color-rgb: 0, 159, 224;
-  --table-head-color: rgba(var(--table-head-color-rgb), 0.8);
-  --table-even-row-color: rgb(var(--table-head-color-rgb), 0.075);
+  --table-head-color-rgb: 0 159 224;
+  --table-head-color: rgb(var(--table-head-color-rgb) / 80%);
+  --table-even-row-color: rgb(var(--table-head-color-rgb) / 7.5%);
   --table-border-color: var(--table-even-row-color);
-  --table-subhead-color: var(--table-even-row-color);
+  --table-subhead-color: rgb(var(--table-head-color-rgb) / 25%);
   --table-head-text-color: white;
 
   /* pseudo content */
@@ -23,9 +23,9 @@
   --red-error: "❌";
 
   /* nav items */
-  --nav-item-background-color-rgb: 0, 128, 132;
+  --nav-item-background-color-rgb: 0 128 132;
   --nav-item-background-color: rgb(var(--nav-item-background-color-rgb));
-  --nav-item-background-color-hover: rgba(var(--nav-item-background-color-rgb), 0.6);
+  --nav-item-background-color-hover: rgb(var(--nav-item-background-color-rgb) / 60%);
   --nav-item-text-color: white;
   --nav-width: min(90vw, 320px);
 
@@ -34,16 +34,16 @@
   --input-placeholder: #99c7c2;;
 
   /* buttons */
-  --button-background-color-rgb: 166, 22, 128;
+  --button-background-color-rgb: 166 22 128;
   --button-background-color: rgb( var(--button-background-color-rgb));
-  --button-background-hover: rgba( var(--button-background-color-rgb), 0.6);
+  --button-background-hover: rgb( var(--button-background-color-rgb) / 60%);
  
-  --file-input-background-color-rgb: 0, 102, 179;
+  --file-input-background-color-rgb: 0 102 179;
   --file-input-background-color: rgb( var(--file-input-background-color-rgb));
-  --file-input-background-hover: rgba( var(--file-input-background-color-rgb), 0.6);
+  --file-input-background-hover: rgb( var(--file-input-background-color-rgb) / 60%);
 
-  --button-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
-  --button-shadow-active: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+  --button-shadow: 7px 6px 28px 1px rgb(0 0 0 / 24%);
+  --button-shadow-active: 3px 2px 22px 1px rgba(0 0 0 / 24%);
   --button-transform: scale(0.98);
 }
 
@@ -186,4 +186,15 @@ input {
   height: 0;
   width: 0;
   position: relative;
+}
+
+dialog::backdrop {
+  background-color: rgba(0 0 0 / 40%);
+  backdrop-filter: blur(var(--gap));
+}
+
+dialog {
+  border-radius: var(--gap);
+  border: 1px solid rgb(var(--table-head-color-rgb) / 7.5%);
+  padding: var(--padding-vert);
 }
