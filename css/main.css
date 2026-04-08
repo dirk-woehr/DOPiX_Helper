@@ -45,6 +45,10 @@
   --button-shadow: 7px 6px 28px 1px rgb(0 0 0 / 24%);
   --button-shadow-active: 3px 2px 22px 1px rgba(0 0 0 / 24%);
   --button-transform: scale(0.98);
+
+  --toggle-label-color-on-rgb: 0 160 0;
+  --toggle-label-color-on: rgb( var(--toggle-label-color-on-rgb));
+  --toggle-label-color-off: rgb( var(--toggle-label-color-on-rgb) / 60%);
 }
 
 * {
@@ -196,5 +200,11 @@ dialog::backdrop {
 dialog {
   border-radius: var(--gap);
   border: 1px solid rgb(var(--table-head-color-rgb) / 7.5%);
-  padding: var(--padding-vert);
+  padding: calc(var(--padding-vert) * 4);
+  background-color: var(--background-color);
+  color: rgb(var(--text-color));
+  &#errorDialog {
+    --button-background-color: rgb(128 0 0);
+    --button-background-hover: rgb(144 0 0);
+  }
 }

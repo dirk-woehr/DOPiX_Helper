@@ -24,6 +24,18 @@
   return map;
 } */
 
+const classNames = {
+  "-info": "dopixInfo",
+  "-application": "dopixApplication",
+  "documenttype-": "d7documenttype",
+  "frameelement-": "d7frameelement",
+  "pagedefinition-": "d7pagedefinition",
+  "presentation-": "d7presentation",
+  "style-": "d7style",
+  "subtemplate-": "d7subtemplate",
+  "variable-": "d7variable",
+}
+
 const mapKeys = [
   ["block", "paragraph"],
   ["group", "stencil"],
@@ -157,6 +169,20 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
+const getRowClass = (objectName, d7type, dopixType) => {
+  if(objectName.startsWith("Z_ZZ_ZZ_")) {
+    return "genericObject";
+  }
+  return classNames[d7type + dopixType];
+}
+
+const addRowClass = (row, objectName, d7type, dopixType) => {
+  const rowClass = getRowClass(objectName, d7type, dopixType);
+  if(rowClass !== undefined) {
+    row.classList.add(rowClass)
+  }
+}
+
 const buildD7table = (objectTable) => {
   const table = document.getElementById("d7table");
   const colspan = 3;
@@ -165,21 +191,23 @@ const buildD7table = (objectTable) => {
   objectTable.forEach(object => {
     const {name, d7type, dopixType} = object;
     const currentObjectHead = d7type + dopixType;
-
+    
     if(currentObjectHead !== objectHead) {
       const trObjHead = document.createElement("tr");
+      addRowClass(trObjHead, "", d7type, dopixType);
       const thObjHead = document.createElement("th");  
-
+      
       thObjHead.setAttribute("colspan", colspan);
       thObjHead.classList.add("columnHeadMain");
       thObjHead.innerText = object.d7type + " / " + object.dopixType;
       table.appendChild(trObjHead);
       trObjHead.appendChild(thObjHead);
-
+      
       objectHead = currentObjectHead;
       isEven = false;
-
+      
       const trObjNames = document.createElement("tr");
+      addRowClass(trObjNames, "", d7type, dopixType);
       const thObjName = document.createElement("th");
       thObjName.classList.add("columnHead");
       const thD7type = document.createElement("th");
@@ -196,6 +224,7 @@ const buildD7table = (objectTable) => {
     }
 
     const trObjectValues = document.createElement("tr");
+    addRowClass(trObjectValues, name, d7type, dopixType);
     if(isEven) {
       trObjectValues.classList.add("even");
     }

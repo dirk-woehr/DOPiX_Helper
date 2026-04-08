@@ -17,8 +17,22 @@
   margin: 0 var(--padding-vert);
   width: calc(100vw - calc(var(--padding-vert) * 4));
 }
+.mainContainer {
+  .objectFilter {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: var(--gap);
+    padding: var(--padding-vert) var(--gap);
+  }
+}
 
 tr {
+  td, th {
+    padding: 6px;
+  }
+  td:not(:last-child) {
+    border-right: 1px solid var(--table-head-color);
+  }
   &.even {
     background-color: var(--table-even-row-color);
   }
@@ -31,6 +45,181 @@ tr {
     padding: var(--padding-vert);
     &:not(:last-child) {
       border-right: 1px solid var(--table-head-color);
+    }
+  }
+  &.dopixInfo, &.dopixApplication, &.genericObject, &.d7documenttype,
+   &.d7frameelement, &.d7pagedefinition, &.d7presentation, &.d7style ,
+   &.d7subtemplate, &.d7variable {
+    display: none;
+   }
+}
+
+div.objectFilter {
+  position:sticky;
+  top: 0;
+  background-color: var(--background-color);
+  & > label {
+    background-color: var(--toggle-label-color-off);
+    padding: var(--padding-vert) var(--padding-horz);
+    border-radius: var(--gap);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    & :hover {
+      opacity: 0.7;
+    }
+    & > span {
+      display: flex;
+      align-items: center;
+      &::before {
+        content: "☐";
+        padding-right: var(--gap);
+        font-size: 1.5rem;
+      }
+    }
+  }
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"]#dopixInfo:checked {
+  & ~ table > tr.dopixInfo {
+    display: revert;
+  }
+  & ~ div.objectFilter > label.dopixInfo {
+    background-color: var(--toggle-label-color-on);
+    & > span {
+      &:before {
+        content: "☑";
+      }
+    }
+  }
+}
+
+input[type="checkbox"]#dopixApplication:checked {
+  & ~ table > tr.dopixApplication {
+    display: revert;
+  }
+  & ~ div.objectFilter > label.dopixApplication {
+    background-color: var(--toggle-label-color-on);
+    & > span {
+      &:before {
+        content: "☑";
+      }
+    }
+  }
+}
+
+input[type="checkbox"]#genericObject:checked {
+  & ~ table > tr.genericObject {
+    display: revert;
+  }
+  & ~ div.objectFilter > label.genericObject {
+    background-color: var(--toggle-label-color-on);
+    & > span {
+      &:before {
+        content: "☑";
+      }
+    }
+  }
+}
+
+input[type="checkbox"]#d7documenttype:checked {
+  & ~ table > tr.d7documenttype {
+    display: revert;
+  }
+  & ~ div.objectFilter > label.d7documenttype {
+    background-color: var(--toggle-label-color-on);
+    & > span {
+      &:before {
+        content: "☑";
+      }
+    }
+  }
+}
+
+input[type="checkbox"]#d7frameelement:checked {
+  & ~ table > tr.d7frameelement {
+    display: revert;
+  }
+  & ~ div.objectFilter > label.d7frameelement {
+    background-color: var(--toggle-label-color-on);
+    & > span {
+      &:before {
+        content: "☑";
+      }
+    }
+  }
+}
+
+input[type="checkbox"]#d7pagedefinition:checked {
+  & ~ table > tr.d7pagedefinition {
+    display: revert;
+  }
+  & ~ div.objectFilter > label.d7pagedefinition {
+    background-color: var(--toggle-label-color-on);
+    & > span {
+      &:before {
+        content: "☑";
+      }
+    }
+  }
+}
+
+input[type="checkbox"]#d7presentation:checked {
+  & ~ table > tr.d7presentation {
+    display: revert;
+  }
+  & ~ div.objectFilter > label.d7presentation {
+    background-color: var(--toggle-label-color-on);
+    & > span {
+      &:before {
+        content: "☑";
+      }
+    }
+  }
+}
+
+input[type="checkbox"]#d7style:checked {
+  & ~ table > tr.d7style {
+    display: revert;
+  }
+  & ~ div.objectFilter > label.d7style {
+    background-color: var(--toggle-label-color-on);
+    & > span {
+      &:before {
+        content: "☑";
+      }
+    }
+  }
+}
+
+input[type="checkbox"]#d7subtemplate:checked {
+  & ~ table > tr.d7subtemplate {
+    display: revert;
+  }
+  & ~ div.objectFilter > label.d7subtemplate {
+    background-color: var(--toggle-label-color-on);
+    & > span {
+      &:before {
+        content: "☑";
+      }
+    }
+  }
+}
+
+input[type="checkbox"]#d7variable:checked {
+  & ~ table > tr.d7variable {
+    display: revert;
+  }
+  & ~ div.objectFilter > label.d7variable {
+    background-color: var(--toggle-label-color-on);
+    & > span {
+      &:before {
+        content: "☑";
+      }
     }
   }
 }

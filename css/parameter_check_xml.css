@@ -199,7 +199,7 @@ th.tfoRefContainer {
 #pageNav {
   position:sticky;
   top: 0;
-  background-color: rgb(var(--background-color-rgb));
+  background-color: var(--background-color);
   padding: var(--padding-horz) var(--padding-horz);
   box-shadow: 5px 5px 5px var(--background-color);
   ul {
