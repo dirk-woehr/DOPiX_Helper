@@ -41,6 +41,7 @@
   --file-input-background-color-rgb: 0 102 179;
   --file-input-background-color: rgb( var(--file-input-background-color-rgb));
   --file-input-background-hover: rgb( var(--file-input-background-color-rgb) / 60%);
+  --file-input-label-background-color: rgb( var(--file-input-background-color-rgb) / 70%);
 
   --button-shadow: 7px 6px 28px 1px rgb(0 0 0 / 24%);
   --button-shadow-active: 3px 2px 22px 1px rgba(0 0 0 / 24%);
@@ -49,6 +50,8 @@
   --toggle-label-color-on-rgb: 0 160 0;
   --toggle-label-color-on: rgb( var(--toggle-label-color-on-rgb));
   --toggle-label-color-off: rgb( var(--toggle-label-color-on-rgb) / 60%);
+  --toggle-label-color-hover: rgb( var(--toggle-label-color-on-rgb) / 45%);
+  --toggle-label-color-on-hover: rgb( var(--toggle-label-color-on-rgb) / 70%);
 }
 
 * {
@@ -131,30 +134,6 @@ button {
   }
 }
 
-input[type=file] {
-  font-size: 18px;
-  width: fit-content;
-  &::file-selector-button {
-    border: none;
-    background-color: var(--file-input-background-color);
-    font-size: 18px;
-    font-weight: 800;
-    color: white;
-    padding: 12px 36px;
-    text-decoration: none;
-    border-radius: 6px;
-    display: inline-block;
-    box-shadow: var(--button-shadow);
-    &:hover {
-      background-color: var(--file-input-background-hover);
-    }
-    &:active {
-      box-shadow: var(--button-shadow-active);
-      transform: var(--button-transform);
-    }
-  }
-}
-
 input[type="text"] {
   padding: 12px 36px;
   font-size: 18px;
@@ -206,5 +185,44 @@ dialog {
   &#errorDialog {
     --button-background-color: rgb(128 0 0);
     --button-background-hover: rgb(144 0 0);
+  }
+}
+
+div.fileInputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  &:not(:first-child) {
+    margin-top: calc(var(--gap) * 2);
+  }
+  label {
+    padding: var(--padding-vert) var(--padding-horz);
+    margin-bottom: var(--gap);
+    background-color: var(--file-input-label-background-color); 
+    width: min(90vw, 640px);
+    border-radius: var(--gap);
+  }
+  input[type=file] {
+    font-size: 18px;
+    width: fit-content;
+    &::file-selector-button {
+      border: none;
+      background-color: var(--file-input-background-color);
+      font-size: 18px;
+      font-weight: 800;
+      color: white;
+      padding: 12px 36px;
+      text-decoration: none;
+      border-radius: 6px;
+      display: inline-block;
+      box-shadow: var(--button-shadow);
+      &:hover {
+        background-color: var(--file-input-background-hover);
+      }
+      &:active {
+        box-shadow: var(--button-shadow-active);
+        transform: var(--button-transform);
+      }
+    }
   }
 }

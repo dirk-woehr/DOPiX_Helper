@@ -2,10 +2,6 @@
   display: flex;
   flex-direction: column;
   gap: calc(var(--gap) * 2);
-  div {
-    display: flex;
-    flex-direction: column;
-  }
 }
 
 .mainContainer button:first-of-type {
@@ -65,8 +61,14 @@ div.objectFilter {
     cursor: pointer;
     display: flex;
     align-items: center;
-    & :hover {
-      opacity: 0.7;
+    box-shadow: var(--button-shadow);
+    transition: background-color 0.1s ease-in-out;
+    &:hover {
+      background-color: var(--toggle-label-color-hover);
+    }
+    &:active {
+      box-shadow: var(--button-shadow-active);
+      transform: var(--button-transform);
     }
     & > span {
       display: flex;
@@ -90,6 +92,9 @@ input[type="checkbox"]#dopixInfo:checked {
   }
   & ~ div.objectFilter > label.dopixInfo {
     background-color: var(--toggle-label-color-on);
+    &:hover {
+      background-color: var(--toggle-label-color-on-hover);
+    }
     & > span {
       &:before {
         content: "☑";
@@ -104,6 +109,9 @@ input[type="checkbox"]#dopixApplication:checked {
   }
   & ~ div.objectFilter > label.dopixApplication {
     background-color: var(--toggle-label-color-on);
+    &:hover {
+      background-color: var(--toggle-label-color-on-hover);
+    }
     & > span {
       &:before {
         content: "☑";
@@ -118,6 +126,9 @@ input[type="checkbox"]#genericObject:checked {
   }
   & ~ div.objectFilter > label.genericObject {
     background-color: var(--toggle-label-color-on);
+    &:hover {
+      background-color: var(--toggle-label-color-on-hover);
+    }
     & > span {
       &:before {
         content: "☑";
@@ -132,6 +143,9 @@ input[type="checkbox"]#d7documenttype:checked {
   }
   & ~ div.objectFilter > label.d7documenttype {
     background-color: var(--toggle-label-color-on);
+    &:hover {
+      background-color: var(--toggle-label-color-on-hover);
+    }
     & > span {
       &:before {
         content: "☑";
@@ -146,6 +160,9 @@ input[type="checkbox"]#d7frameelement:checked {
   }
   & ~ div.objectFilter > label.d7frameelement {
     background-color: var(--toggle-label-color-on);
+    &:hover {
+      background-color: var(--toggle-label-color-on-hover);
+    }
     & > span {
       &:before {
         content: "☑";
@@ -160,6 +177,9 @@ input[type="checkbox"]#d7pagedefinition:checked {
   }
   & ~ div.objectFilter > label.d7pagedefinition {
     background-color: var(--toggle-label-color-on);
+    &:hover {
+      background-color: var(--toggle-label-color-on-hover);
+    }
     & > span {
       &:before {
         content: "☑";
@@ -174,6 +194,9 @@ input[type="checkbox"]#d7presentation:checked {
   }
   & ~ div.objectFilter > label.d7presentation {
     background-color: var(--toggle-label-color-on);
+    &:hover {
+      background-color: var(--toggle-label-color-on-hover);
+    }
     & > span {
       &:before {
         content: "☑";
@@ -188,6 +211,9 @@ input[type="checkbox"]#d7style:checked {
   }
   & ~ div.objectFilter > label.d7style {
     background-color: var(--toggle-label-color-on);
+    &:hover {
+      background-color: var(--toggle-label-color-on-hover);
+    }
     & > span {
       &:before {
         content: "☑";
@@ -202,6 +228,9 @@ input[type="checkbox"]#d7subtemplate:checked {
   }
   & ~ div.objectFilter > label.d7subtemplate {
     background-color: var(--toggle-label-color-on);
+    &:hover {
+      background-color: var(--toggle-label-color-on-hover);
+    }
     & > span {
       &:before {
         content: "☑";
@@ -216,6 +245,9 @@ input[type="checkbox"]#d7variable:checked {
   }
   & ~ div.objectFilter > label.d7variable {
     background-color: var(--toggle-label-color-on);
+    &:hover {
+      background-color: var(--toggle-label-color-on-hover);
+    }
     & > span {
       &:before {
         content: "☑";

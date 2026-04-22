@@ -67,12 +67,16 @@ const refreshNames = (baseName, reanimgGrid, namedElements) => {
 document.addEventListener("DOMContentLoaded", function() {
   const reanimgGrid = document.getElementById("reanimgGrid");
   const baseName = document.getElementById("baseName");
+  const btnDescription = document.getElementById("btnDescription");
+  const description = document.getElementById("description");
 
   baseName.addEventListener("input", () => {
-  refreshNames(baseName, reanimgGrid, namedElements);
+    refreshNames(baseName, reanimgGrid, namedElements);
   })
 
   refreshNames(baseName, reanimgGrid, namedElements);
 
-  
+  btnDescription.addEventListener("click", () => {
+    navigator.clipboard.writeText(description.value);
+  })  
 });

@@ -1,5 +1,7 @@
-.formContainer {
-  width: 90vw;
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--gap) * 2);
 }
 
 .xpathExpression {
