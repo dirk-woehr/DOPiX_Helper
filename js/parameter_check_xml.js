@@ -6,6 +6,10 @@ const parseXML = (documentString) => {
   const table = document.getElementById("table");
   // clear select
   const objectSelect = document.getElementById("objectSelect");
+  
+  setParameters = new Set();
+  objects = {};
+
   objectSelect.innerHTML = "";
   // add base select
   const baseOption = document.createElement("option");
@@ -133,8 +137,6 @@ const parseXML = (documentString) => {
 }
 
 document.addEventListener("DOMContentLoaded", function() {  
-  setParameters = new Set();
-  objects = {};
 
   const btnCheck = document.getElementById('btnCheck');
   const fileInput = document.getElementById("fileInput");

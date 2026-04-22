@@ -1,5 +1,8 @@
 Add-Type -AssemblyName System.Windows.Forms
 
+# Sicherstellen, dass die Konsole UTF-8 kann (optional, aber hilfreich)
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+
 function Select-Folder {
     $dialog = New-Object System.Windows.Forms.FolderBrowserDialog
     $dialog.Description = "Bitte Quellordner auswählen"
@@ -28,31 +31,32 @@ function Select-OutputFile {
 }
 
 function Get-Tree($path) {
-    Get-ChildItem $path | ForEach-Object {
+    Get-ChildItem -LiteralPath $path | Sort-Object Name | ForEach-Object {
         if ($_.PSIsContainer) {
-            @{
+            [PSCustomObject]@{
                 name = $_.Name
                 type = "folder"
                 children = Get-Tree $_.FullName
             }
         } else {
-            $fileObject = @{
+            $fileObject = [ordered]@{
                 name = $_.Name
                 type = "file"
             }
 
-            # Nur JSON-Dateien einlesen und parsen
             if ($_.Extension -eq ".json") {
                 try {
-                    $jsonContent = Get-Content $_.FullName -Raw -Encoding UTF8 | ConvertFrom-Json
+                    # Wichtig: Encoding explizit setzen!
+                    $raw = Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8
+                    $jsonContent = $raw | ConvertFrom-Json
                     $fileObject["content"] = $jsonContent
                 }
                 catch {
-                    $fileObject["content_error"] = "Invalid JSON"
+                    $fileObject["content_error"] = $_.Exception.Message
                 }
             }
 
-            $fileObject
+            [PSCustomObject]$fileObject
         }
     }
 }
@@ -64,7 +68,15 @@ $outputFile = Select-OutputFile
 # Tree erzeugen
 $tree = Get-Tree $inputPath
 
-# Ausgabe speichern
-$tree | ConvertTo-Json -Depth 20 | Set-Content $outputFile -Encoding UTF8
+# JSON erzeugen
+$json = $tree | ConvertTo-Json -Depth 20
 
-[System.Windows.Forms.MessageBox]::Show("Fertig! Datei wurde gespeichert unter:`n$outputFile", "Erfolg")
+# 🔴 UTF-8 OHNE BOM schreiben (wichtig!)
+$utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+[System.IO.File]::WriteAllText($outputFile, $json, $utf8NoBom)
+
+# Erfolgsmeldung
+[System.Windows.Forms.MessageBox]::Show(
+    "Fertig! Datei wurde gespeichert unter:`n$outputFile",
+    "Erfolg"
+)

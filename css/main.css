@@ -192,6 +192,9 @@ div.fileInputContainer {
   display: flex;
   flex-direction: column;
   gap: var(--gap);
+  width: fit-content;
+  border: 2px solid var(--file-input-label-background-color);
+  border-radius: var(--gap);
   &:not(:first-child) {
     margin-top: calc(var(--gap) * 2);
   }
@@ -200,11 +203,13 @@ div.fileInputContainer {
     margin-bottom: var(--gap);
     background-color: var(--file-input-label-background-color); 
     width: min(90vw, 640px);
-    border-radius: var(--gap);
+    border-radius: var(--gap) var(--gap) 0 0;
   }
   input[type=file] {
     font-size: 18px;
     width: fit-content;
+    margin-bottom: calc(var(--gap) * 2);
+    margin-left: calc(var(--gap) * 2);
     &::file-selector-button {
       border: none;
       background-color: var(--file-input-background-color);

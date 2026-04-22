@@ -229,4 +229,11 @@ th.tfoRefContainer {
       display: none;
     }
   }
+  & + .mainContainer {
+    margin-top: var(--padding-vert);
+    padding: var(--padding-vert) var(--padding-horz);
+    gap: var(--padding-vert);
+    display: flex;
+    flex-direction: column;
+  }
 }
