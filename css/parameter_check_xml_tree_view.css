@@ -66,6 +66,7 @@
   position: sticky;
   max-height: 50vh;
   bottom: 0;
+  width: fit-content;
   #tree {
     padding: calc(var(--gap) * 2);
     background-color: var(--background-color);
@@ -75,6 +76,8 @@
     margin-bottom: var(--gap);
     margin-left: var(--gap);
     box-shadow: 5px 5px 5px var(--background-color);
+    max-height: 50vh;
+    overflow-y: scroll;
     &:empty {
       display: none;
     }

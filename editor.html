@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Expression Editor (Web Components)</title>
+<style>
+  body { font-family: Arial; padding: 20px; }
+  expr-block, expr-group, expr-function {
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 4px;
+    margin: 2px;
+  }
+</style>
+</head>
+<body>
+
+<h2>Expression Editor (Web Components)</h2>
+
+<div>
+  <button onclick="editor.add('string')">String</button>
+  <button onclick="editor.add('variable')">Variable</button>
+  <button onclick="editor.add('number')">Zahl</button>
+  <button onclick="editor.add('operator')">Operator</button>
+  <button onclick="editor.add('special')">Spezialvariable</button>
+  <button onclick="editor.add('group')">Gruppe</button>
+  <button onclick="editor.add('function')">Funktion</button>
+</div>
+
+<expression-editor id="editor"></expression-editor>
+
+<h3>Output:</h3>
+<pre id="output"></pre>
+
+<script>
+const FUNCTIONS = {
+  funktion: ["string", "number", "any"],
+  funktion2: ["string", "any"]
+};
+
+// Basis-Block
+class ExprBlock extends HTMLElement {
+  constructor() {
+    super();
+    this.type = this.getAttribute("type");
+    this.value = this.getAttribute("value") || "";
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  render() {
+    this.innerHTML = "";
+
+    let text = "";
+
+    switch(this.type) {
+      case "string": text = `"${this.value}"`; break;
+      case "variable": text = this.value; break;
+      case "special": text = "&" + this.value; break;
+      case "number": text = this.value; break;
+      case "operator": text = " " + this.value + " "; break;
+    }
+
+    this.append(text);
+
+    const btn = document.createElement("button");
+    btn.textContent = "x";
+    btn.onclick = () => this.remove();
+    this.append(btn);
+  }
+
+  toString() {
+    switch(this.type) {
+      case "string": return `"${this.value}"`;
+      case "variable": return this.value;
+      case "special": return "&" + this.value;
+      case "number": return this.value;
+      case "operator": return " " + this.value + " ";
+    }
+  }
+}
+customElements.define("expr-block", ExprBlock);
+
+// Gruppe (Klammern)
+class ExprGroup extends HTMLElement {
+  connectedCallback() {
+    this.render();
+  }
+
+  render() {
+    this.innerHTML = "(";
+    const slot = document.createElement("slot");
+    this.append(slot);
+    this.append(")");
+  }
+
+  toString() {
+    return "(" + [...this.children].map(c => c.toString()).join("") + ")";
+  }
+}
+customElements.define("expr-group", ExprGroup);
+
+// Funktion
+class ExprFunction extends HTMLElement {
+  constructor() {
+    super();
+    this.name = this.getAttribute("name");
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  render() {
+    this.innerHTML = this.name + "(";
+
+    const paramCount = FUNCTIONS[this.name]?.length || 0;
+
+    for (let i = 0; i < paramCount; i++) {
+      const slot = document.createElement("slot");
+      slot.name = "param" + i;
+      this.append(slot);
+      if (i < paramCount - 1) this.append(", ");
+    }
+
+    this.append(")");
+  }
+
+  toString() {
+    const params = [...this.children].map(c => c.toString());
+    return this.name + "(" + params.join(", ") + ")";
+  }
+}
+customElements.define("expr-function", ExprFunction);
+
+// Editor
+class ExpressionEditor extends HTMLElement {
+  add(type) {
+    let el;
+
+    if (type === "group") {
+      el = document.createElement("expr-group");
+    }
+    else if (type === "function") {
+      const name = prompt("Funktionsname:");
+      if (!FUNCTIONS[name]) return alert("Unbekannt!");
+      el = document.createElement("expr-function");
+      el.setAttribute("name", name);
+    }
+    else {
+      const val = prompt("Wert:");
+      el = document.createElement("expr-block");
+      el.setAttribute("type", type);
+      el.setAttribute("value", val);
+    }
+
+    this.appendChild(el);
+    this.update();
+  }
+
+  update() {
+    document.getElementById("output").textContent = this.toString();
+  }
+
+  toString() {
+    return [...this.children].map(c => c.toString()).join("");
+  }
+}
+customElements.define("expression-editor", ExpressionEditor);
+
+const editor = document.getElementById("editor");
+</script>
+
+</body>
+</html>
