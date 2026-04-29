@@ -65,7 +65,8 @@
 #treeContainer {
   position: sticky;
   max-height: 50vh;
-  bottom: 0;
+  left: var(--gap);
+  bottom: var(--gap);
   width: fit-content;
   #tree {
     padding: calc(var(--gap) * 2);
