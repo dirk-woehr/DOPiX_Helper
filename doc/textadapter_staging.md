@@ -14,5 +14,3 @@ Auf Exportieren klicken
 * -> Import / Export
 * Exportierte ZIP-Datei Datei importieren
 * Log speichern
-
-

@@ -63,28 +63,42 @@ const collectParameters = (paramElements, parameters) => {
   }
 }
 
+const addParametersFromText = (params, parameters) => {
+  params.forEach((param) => {
+    if(parameters[param] !== undefined) {
+      parameters[param].inText = true;
+    } else {
+      parameters[param] = {
+        inParam: false,
+        inText: true,
+        logic: {} 
+      }
+    }
+  })
+}
+
 /**
- * Extracts variables text body
+ * Extracts variables from text body
  * adds them to parameters collection
  * and marks them as used, if already collected
  * @param { string } logicString - The logic string
  */
 
 const extractParametersFromText = (textcontent, parameters) => {
-  const matches = textcontent.match(/&[A-Z0-9_]*\./g);
-  if(matches && matches.length) {
-    matches.forEach((match) => {
-      const param = match.replace("&", "").replace(".", "");
-      if(parameters[param] !== undefined) {
-        parameters[param].inText = true;
-      } else {
-        parameters[param] = {
-          inParam: false,
-          inText: true,
-          logic: {} 
-        }
-      }
-    });
+  // extract standard parameters
+  const matchesVars = textcontent.match(/&[A-Z0-9_]*\./g);
+  if(matchesVars && matchesVars.length) {
+    const params = matchesVars.map(match => {
+      return match.replace("&", "").replace(".", "");
+    })
+    addParametersFromText(params, parameters);
+  }
+
+  // extract form fields from text
+  const matchesFields = [...textcontent.matchAll(/:DPFIELD n='([A-Z0-9_]+)'/g)];
+  if(matchesFields.length) {
+    const params = matchesFields.map(m => m[1]);
+    addParametersFromText(params, parameters);
   }
 }
 

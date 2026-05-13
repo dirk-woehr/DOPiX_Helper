@@ -17,7 +17,7 @@ SDK-Login wählen
 ## D7-Import
 
 ### Datencenter
-* DSF-Daei auswählen
+* DSF-Datei auswählen
 * -> Importieren
 * aufklappen und Ergebnis prüfen
 
@@ -27,7 +27,7 @@ SDK-Login wählen
 <!-- <textApp mode="UAPI" id="K_ZS_ZZ_RUF_1051_BEEND_DAUERAUFTRAG"> -->
 <textApp mode="PTRW" id="ZZZ_ZZZ_Z_PRW_SERVICE" >
 
-* Benötigt wird die UAPI-Zeile, PTRW löschen. Wenn USPI felt, selbst anlegen, RUF-Objekt entsprechend anlegen (steht schon in TTD unter reportId)
+* Benötigt wird die UAPI-Zeile, PTRW löschen. Wenn UAPI felt, selbst anlegen, RUF-Objekt entsprechend anlegen (steht schon in TTD unter reportId)
 
 * erst Testen mit Play-Button
 * Ergebnis sollte grün sein
