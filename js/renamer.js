@@ -79,4 +79,4 @@ document.addEventListener("DOMContentLoaded", function() {
   btnDescription.addEventListener("click", () => {
     navigator.clipboard.writeText(description.value);
   })  
-});
+})
