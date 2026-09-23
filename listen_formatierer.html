@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listen Formatierer</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        h1 { color: #2c3e50; }
+        textarea {
+            width: 100%;
+            height: 180px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-family: monospace;
+            font-size: 14px;
+            margin-bottom: 15px;
+            resize: vertical;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button:hover { background-color: #2980b9; }
+        .box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        .stats {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+        }
+        .duplicate-list {
+            color: #c0392b;
+            background: #fdf2f2;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-family: monospace;
+            max-height: 120px;
+            overflow-y: auto;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Listen-Formatierer (Pipe-Trenner)</h1>
+    
+    <div class="box">
+        <label for="inputList"><strong>Eingabe (eine Zeile pro Wert):</strong></label>
+        <textarea id="inputList" placeholder="Füge hier deine Liste ein..."></textarea>
+        <button id="processBtn">Liste verarbeiten</button>
+    </div>
+    
+    <div class="box">
+        <label for="outputResult"><strong>Ergebnis (RegEx mit Pipes getrennt):</strong></label>
+        <textarea id="outputResult" readonly placeholder="Das Ergebnis erscheint hier..."></textarea>
+        
+        <div class="stats" id="statsOutput"></div>
+        <br>
+        <button id="copyBtn">Ergebnis kopieren</button>
+    </div>
+
+    <script>
+        // Event-Listener direkt im Script registrieren, um onclick-Fehler zu vermeiden
+        document.getElementById('processBtn').addEventListener('click', function() {
+            const inputText = document.getElementById('inputList').value;
+            
+            // Zeilen aufteilen, Whitespaces entfernen und leere Zeilen ignorieren
+            const lines = inputText.split('\n')
+                .map(line => line.trim())
+                .filter(line => line.length > 0);
+            
+            const uniqueItems = [];
+            const duplicates = new Set();
+            
+            // Duplikate identifizieren
+            lines.forEach(item => {
+                if (uniqueItems.includes(item)) {
+                    duplicates.add(item);
+                } else {
+                    uniqueItems.push(item);
+                }
+            });
+            
+            // Mit Pipes verbinden
+            const resultString = uniqueItems.join('|');
+            document.getElementById('outputResult').value = `^(${resultString})$`;
+            
+            // Statistiken ausgeben
+            let statsHtml = `
+                <div><strong>Gefundene Zeilen gesamt:</strong> ${lines.length}</div>
+                <div><strong>Einzigartige Einträge:</strong> ${uniqueItems.length}</div>
+                <div><strong>Entfernte Duplikate:</strong> ${lines.length - uniqueItems.length}</div>
+            `;
+            
+            if (duplicates.size > 0) {
+                statsHtml += `
+                    <div style="margin-top: 10px;"><strong>Erkannte Duplikate:</strong></div>
+                    <div class="duplicate-list">${Array.from(duplicates).join('<br>')}</div>
+                `;
+            }
+            
+            document.getElementById('statsOutput').innerHTML = statsHtml;
+        });
+
+        const copyBtn = document.getElementById("copyBtn")
+        copyBtn.addEventListener("click", () => {
+            const outputResult = document.getElementById('outputResult').value;
+            navigator.clipboard.writeText(outputResult);
+            alert("Ergebnis kopiert!");
+        });
+    </script>
+
+</body>
+</html>

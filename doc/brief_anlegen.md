@@ -42,3 +42,9 @@
 
 Z_ZZ_ZZ_EXT_D0001_DEBUGGING auf 1 setzen
 
+## Änderbarkeit Neu
+
+Interne Variablen - Editierbar in Parametern
+Logische TBS bei Logik "Bedingung erfüllt" auf Soll-Objekt-Modus
+Kopfdaten auch auf Änderbar
+

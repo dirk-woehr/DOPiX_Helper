@@ -1,37 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="stylesheet" href="/css/xml_merge.css">
+  <link rel="stylesheet" href="/css/d7_parameter_prefill.css">
+
   <script src="/js/global_functions.js"></script>
-  <script src="/js/xml_merge.js"></script>
-  <title>⭷ DOPiX XML-Merger</title>
-  <!-- font -->
+  <script src="/js/d7_parameter_prefill.js"></script>
+
+  <title>⚙ DOPiX Parameter Check XML</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
 
 </head>
+
 <body>
-  <h1>⭷ DOPiX XML-Merger</h1>
+  <h1 id="header">⚙ D7 Variablen Autofill</h1>  
   <ul id="nav">
     <li>
       <a href="/index.html">🏠 Home</a>
     </li>
   </ul>
   <div class="mainContainer">
-    <div class="fileInputContainer">      
-      <label for="fileInputSource">Quell-XML-Wählen</label>
-      <input type="file" id="fileInputSource" />
-    </div>
     <div class="fileInputContainer">
-      <label for="fileInputTarget">Ziel-XML wählen</label>
-      <input type="file" id="fileInputTarget" />
+      <label for="fileInput">DOPiX-Export wählen</label>
+      <input type="file" id="fileInput" name="fileInput" />
     </div>
-    <button id="btnCheck" disabled>Merge</button>
-    <button id="btnSaveFile" disabled>Save XML</button>
+    <button id="btnCreate">XML Generieren</button>    
   </div>
+  <pre id="xmlOutput"></pre>
+  <button id="btnCopy">XML Kopieren</button>
 </body>
+
 </html>

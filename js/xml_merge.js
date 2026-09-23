@@ -21,7 +21,7 @@ const mergeXML = () => {4
   window.serializedJSON = xmlSerializer.serializeToString(xmlTarget);
 
   // activate copy button
-  btnCopyString.disabled = false;
+  btnSaveFile.disabled = false;
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -29,17 +29,17 @@ document.addEventListener("DOMContentLoaded", function() {
   const fileInputSource = document.getElementById("fileInputSource");
   const fileInputTarget = document.getElementById("fileInputTarget");
   const btnCheck = document.getElementById("btnCheck");
-  const btnCopyString = document.getElementById("btnCopyString");
+  const btnSaveFile = document.getElementById("btnSaveFile");
 
   activateFileDialog(btnCheck, fileInputSource, "xmlSource");
   activateFileDialog(btnCheck, fileInputTarget, "xmlTarget");
 
   btnCheck.addEventListener("click", () => {
-    mergeXML(btnCopyString);
+    mergeXML(btnSaveFile);
   });
 
   // prettify & copy serialized XML string
-  btnCopyString.addEventListener("click", () => {
+  btnSaveFile.addEventListener("click", () => {
     // create blob from XML string
     const blob = new Blob([prettyPrintXml(window.serializedJSON, 2)], {type: "text/xml"});
 
@@ -47,7 +47,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const temporaryDownloadLink = document.createElement('a');
     temporaryDownloadLink.href = URL.createObjectURL(blob);
     console.log("blob set")
-    temporaryDownloadLink.setAttribute('download', "merged.xml");
+    const newFileName = fileInputSource.files[0].name.replace(".xml", "_merged.xml")
+    temporaryDownloadLink.setAttribute('download', newFileName);
     console.log("'download' attribute set")
     temporaryDownloadLink.style.display = 'none';
     document.body.appendChild(temporaryDownloadLink);
