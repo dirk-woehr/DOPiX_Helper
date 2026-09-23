@@ -33,3 +33,27 @@
         opacity: 0.5;
     }
 }
+
+#objectNamer {
+    margin-top: 50px;
+    display: grid;
+    gap: calc( var(--gap) * 2);
+    grid-template-columns: auto 250px 500px auto;
+    input[type="text"] {
+        width: auto;
+        padding: 12px;
+    }
+    button {
+        width: 300px;
+    }
+    p#prefixParagraph {
+        border: 1px solid #FFF;
+        padding: 12px 36px;
+        border-radius: 6px;
+        text-align: center;
+        margin: 0;
+    }
+    input::placeholder {
+        padding: 0;
+    }
+}
