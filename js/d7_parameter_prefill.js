@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function() {
               // maybe do something later
               break;
           }
-          xmlVariables.set(id, `    <var v="${value}" id="${id}" />`)
+          xmlVariables.set(id, `      <var v="${value}" id="${id}" />`)
         }
       }
     })
