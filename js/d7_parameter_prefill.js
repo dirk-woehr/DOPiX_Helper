@@ -50,10 +50,12 @@ document.addEventListener("DOMContentLoaded", function() {
       const format = variable.getAttribute("format");
       const id = variable.getAttribute("id") ?? variable.getAttribute("refid");
 
+      // DEBUG
+      console.log({variable, id, format, isInt: id.includes("_INT_"), isRelevant: relevantFormats.includes(format)})
+
       
       if(!xmlVariables.has(id) && id) {
         if(relevantFormats.includes(format) && id.includes("_INT_")) {
-          console.log({variable});
           let value = "";
           switch (format) {
             case "alphanumeric":

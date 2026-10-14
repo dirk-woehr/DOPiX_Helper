@@ -15,7 +15,8 @@ function Select-Folder {
 }
 
 # Pfad zum Ordner mit den JSON-Dateien
-$ordnerPfad = Select-Folder
+# $ordnerPfad = Select-Folder
+$ordnerPfad =  "C:\Users\Dwoehr\Documents\SDK\D7\INT2editable\1083\sdk\variable"
 
 # HIER ANPASSEN: Name und Wert der neuen Eigenschaft
 $neueProperty = "editable"
@@ -23,8 +24,10 @@ $neuerWert     = $true
 
 # Alle JSON-Dateien im Ordner suchen
 $dateien = Get-ChildItem -Path $ordnerPfad -Filter *.json
+$counter = 0
 
 foreach ($datei in $dateien) {
+    $counter++
     # 1. JSON-Datei einlesen und in ein PowerShell-Objekt umwandeln
     $jsonObjekt = Get-Content -Path $datei.FullName -Raw | ConvertFrom-Json
     
@@ -47,4 +50,4 @@ foreach ($datei in $dateien) {
       }
     }
 }
-Write-Host "Fertig!" -ForegroundColor Cyan
+Write-Host "Fertig! $($counter) Datei(en) verarbeitet" -ForegroundColor Cyan

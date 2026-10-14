@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🧲 Objectlist Collector</title>
+  </head>
+  <style>
+    body {
+      font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      margin: 2rem;
+      color: #222;
+    }
+
+    button,
+    input[type="button"],
+    input[type="submit"] {
+      font: inherit;
+      padding: 0.6rem 1rem;
+      border: none;
+      border-radius: 6px;
+      background: #2563eb;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover,
+    input[type="button"]:hover,
+    input[type="submit"]:hover {
+      background: #1d4ed8;
+    }
+
+    input[type="file"] {
+      font: inherit;
+      margin-bottom: 1rem;
+    }
+
+    pre {
+      /* bewusst nicht vom allgemeinen Font überschrieben */
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #f5f5f5;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+
+    pre:empty {
+        display: none;
+    }
+  </style>
+  <body>
+    <h1>Extrahieren aller exportierten DOPiX-Objekte</h1>
+    <p>
+      Sammelt alle IDs aus .dsf-Dateien ein.
+    </p>
+    <p>
+      Einfach gewünschte Dateien im File-Dialog auswählen.
+    </p>
+    <input type="file" id="dsfFiles" accept=".dsf" multiple /><br /><br />
+    <button id="btnCopyList">Liste Kopieren</button>
+    <pre id="outputResult"></pre>
+    <p id="info"></p>
+
+    <script>
+      async function parseDsfFiles(files) {
+        const ids = new Set();
+        const parser = new DOMParser();
+
+        // Nach Änderungsdatum sortieren: alt → neu
+        const sortedFiles = [...files].sort(
+          (a, b) => a.lastModified - b.lastModified,
+        );
+
+        for (const file of sortedFiles) {
+          console.log(file.name, new Date(file.lastModified));
+
+          const text = await file.text();
+          const xml = parser.parseFromString(text, "application/xml");
+
+          const parseError = xml.querySelector("parsererror");
+          if (parseError) {
+            console.error(`Fehler beim Parsen von ${file.name}`);
+            continue;
+          }
+
+          const data = xml.querySelector("dope > data");
+
+          if (!data) {
+            console.warn(`Kein <data> in ${file.name} gefunden.`);
+            continue;
+          }
+
+          for (const element of data.children) {
+            const id = element.getAttribute("id");
+
+            if (id) {
+              ids.add(id);
+            }
+          }
+        }
+
+        return [...ids];
+      }
+
+      const btnCopyList = document.getElementById("btnCopyList");
+      btnCopyList.addEventListener("click", () => {
+        const outputResult = document.getElementById("outputResult").innerText;
+        navigator.clipboard.writeText(outputResult);
+      });
+
+      // Dateien vom File-Dialog verarbeiten
+      document
+        .getElementById("dsfFiles")
+        .addEventListener("change", async (event) => {
+          const ids = await parseDsfFiles(event.target.files);
+
+          console.log("Gefundene IDs:", ids);
+
+          document.getElementById("outputResult").textContent = ids.join("\n");
+          document.getElementById("info").innerText = ids.length + " Objekt(e)";
+        });
+    </script>
+  </body>
+</html>

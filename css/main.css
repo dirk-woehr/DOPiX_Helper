@@ -27,7 +27,7 @@
   --nav-item-background-color: rgb(var(--nav-item-background-color-rgb));
   --nav-item-background-color-hover: rgb(var(--nav-item-background-color-rgb) / 60%);
   --nav-item-text-color: white;
-  --nav-width: min(90vw, 320px);
+  --nav-width: min(90vw, 360px);
 
   /* form items */
   --input-border: #9DD9D2;
